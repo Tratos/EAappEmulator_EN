@@ -1,0 +1,90 @@
+﻿2024/07/18  v1.6.0.0
+------------------------
+- Open sourced the EAapp simulator source code
+
+
+2024/06/24  v1.5.9.0
+------------------------
+- Added detection of TCP port occupation when starting the program
+- Upgrade dependent library version
+
+
+2024/06/12  v1.5.8.0
+------------------------
+- Fixed the problem that the game cannot be started without EaApp installed
+- Fix known bugs
+
+
+2024/05/31  v1.5.7.0
+------------------------
+- The number of account slots has been increased from 10 to 100
+- Upgrade dependent library version
+
+
+2024/05/04  v1.5.6.0
+------------------------
+- Fixed the problem that the battlelog web page status cannot obtain the game status
+
+
+2024/05/01  v1.5.5.0
+------------------------
+- Fixed an issue that caused crashes for some players when getting their friends list
+
+
+2024/05/01  v1.5.4.0
+------------------------
+- Added the function of minimizing to the system tray to prevent accidental touch
+- Modify the color scheme of the theme program to imitate Win11 style
+- Optimize user experience and polish details
+
+
+2024/04/30  v1.5.3.0
+------------------------
+- Perhaps fixed the issue of incorrect display of user ID on Star Wars: Battlefront 2 scoreboard
+- Perhaps the problem of being unable to connect to the private server of Titanfall 2 Polaris has been fixed.
+- Fixed the problem of FIFA22 FIFA23 FC24 showing that the game version needs to be updated, resulting in the inability to connect to the Internet
+- Fix other known bugs
+
+
+2024/04/29  v1.5.2.0
+------------------------
+- Improved detection and update reminder methods
+- Improved game advanced settings dialog box style
+- Optimize program structure
+
+
+2024/04/29  v1.5.1.0
+------------------------
+- Fixed the problem of repeated prompts in the pop-up window for canceling updates
+- Fixed the problem of white screen when WebView2 is loaded for the first time
+- Fixed the issue of old data not being cleared when changing accounts
+- Update third-party library dependencies
+
+
+2024/04/29  v1.5.0.0
+------------------------
+- Added new game support:
+    Plants vs. Zombies: Garden Warfare 1
+    Plants vs. Zombies: Battle for Harmony Town
+    Star Wars: Battlefront 1
+    Need for Speed: Heat
+    Need for Speed ​​19
+    Two people in a row (cannot play online multiplayer because origin is not available in the game)
+    FIFA 22
+- Fixed an issue in Titanfall 2 that caused Origin to be offline and unable to enter multiplayer mode (compatible with Polaris private server)
+- Fixed the issue where Titanfall 2 can only be used in English
+- Fixed an issue where Titanfall 2 could not connect to the data center
+- Fixed the problem that FIFA23 FC24 cannot switch to the currently installed language during startup
+
+
+2024/04/29  v1.4.4.0
+------------------------
+- Optimize the multi-account switching function, players can freely choose the account to log in when starting
+- Support filling in cookie login at startup
+- Fix known bugs
+
+
+2024/04/24  v1.4.3.0
+------------------------
+- Fixed the issue of repeated login caused by verification cookie validity timeout
+- Fixed the problem that the friend list was not updated correctly when switching accounts
