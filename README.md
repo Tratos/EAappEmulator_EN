@@ -42,23 +42,42 @@ Currently supported games:
 -
 >
 Battlefield 3
+>
 Battlefield 4
-Battlefield Hard Battle
+>
+Battlefield Hardline
+>
 Battlefield 1
+>
 Battlefield V
+>
 Battlefield 2042
+>
 F1® 23
+>
 FC™ 24
+>
 FIFA 22
+>
 FIFA 23
+>
 Two people travel together
+>
 Need for Speed ​​19
+>
 Need for Speed ​​: Popularity
+>
 Need for Speed ​​: Boogie
+>
 Plants vs. Zombies: Defense of Harmony Town
+>
 Plants vs. Zombies: Garden Warfare
+>
 Plants vs. Zombies: Garden Warfare 2
+>
 Star Wars: Battlefront
+>
 Star Wars: Battlefront 2
+>
 Titanfall 2 
 >
