@@ -69,6 +69,8 @@ Need for Speed ​​: Popularity
 >
 Need for Speed ​​: Boogie
 >
+Need for Speed: Rivals (Unable to connect to the Internet)
+>
 Plants vs. Zombies: Defense of Harmony Town
 >
 Plants vs. Zombies: Garden Warfare
@@ -79,5 +81,12 @@ Star Wars: Battlefront
 >
 Star Wars: Battlefront 2
 >
+Star Wars Jedi-Fall Order™
+>
+Star Wars™ Squadrons
+>
 Titanfall 2 
 >
+hymn
+>
+PGA Tour
