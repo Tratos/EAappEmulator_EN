@@ -1,11 +1,11 @@
-﻿using EAappEmulater.Utils;
+﻿using CommunityToolkit.Mvvm.Input;
 using EAappEmulater.Helper;
-using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Utils;
 
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// SettingView.xaml 的交互逻辑
+/// Interaction logic of SettingView.xaml
 /// </summary>
 public partial class SettingView : UserControl
 {
@@ -31,7 +31,7 @@ public partial class SettingView : UserControl
     }
 
     /// <summary>
-    /// 打开配置文件
+    /// Open configuration file
     /// </summary>
     [RelayCommand]
     private void OpenConfigFolder()

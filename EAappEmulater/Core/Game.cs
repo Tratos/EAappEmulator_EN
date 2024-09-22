@@ -6,7 +6,7 @@ namespace EAappEmulater.Core;
 public static class Game
 {
     /// <summary>
-    /// 获取系统环境变量集合
+    /// Get the system environment variable collection
     /// </summary>
     private static Dictionary<string, string> GetEnvironmentVariables()
     {
@@ -19,7 +19,7 @@ public static class Game
     }
 
     /// <summary>
-    /// 启动游戏
+    /// Start the game
     /// </summary>
     public static void RunGame(GameType gameType, string webArgs = "", bool isNotice = true)
     {
@@ -29,29 +29,34 @@ public static class Game
 
             ////////////////////////////////////////////////////////
 
-            var execPath = string.Empty;        // 注册表路径
-            var execPath2 = string.Empty;       // 自定义启动路径
+            var execPath = string.Empty;        // Registry path
+            var execPath2 = string.Empty;       //Customize startup path
 
-            // 处理 双人成行 特殊启动路径
+            // Handle the special startup path of two people in a row
             if (gameInfo.GameType is GameType.ITT)
             {
-                // 双人成行
+                // Two people make a trip
                 execPath = Path.Combine(gameInfo.Dir, "Nuts\\Binaries\\Win64", gameInfo.AppName);
                 execPath2 = Path.Combine(gameInfo.Dir2, "Nuts\\Binaries\\Win64", gameInfo.AppName);
             }
+            else if (gameInfo.GameType is GameType.SWJFO)
+            {
+                execPath = Path.Combine(gameInfo.Dir, "SwGame\\Binaries\\Win64", gameInfo.AppName);
+                execPath2 = Path.Combine(gameInfo.Dir2, "SwGame\\Binaries\\Win64", gameInfo.AppName);
+            }
             else
             {
-                // 其他
+                // other
                 execPath = Path.Combine(gameInfo.Dir, gameInfo.AppName);
                 execPath2 = Path.Combine(gameInfo.Dir2, gameInfo.AppName);
             }
 
-            // 判断是否使用自定义路径启动游戏
+            // Determine whether to use a custom path to start the game
             if (gameInfo.IsUseCustom)
             {
-                // 自定义游戏路径
+                // Custom game path
 
-                // 判断游戏路径
+                // Determine the game path
                 if (string.IsNullOrWhiteSpace(gameInfo.Dir2))
                 {
                     LoggerHelper.Warn($"{gameType} The game path is empty, starting the game and terminating it {gameInfo.Dir}");
@@ -61,7 +66,7 @@ public static class Game
                     return;
                 }
 
-                // 判断游戏文件
+                // Determine game files
                 if (!File.Exists(execPath2))
                 {
                     LoggerHelper.Warn($"{gameType} The main program file of the game does not exist, and the game is terminated when starting it. {execPath2}");
@@ -73,9 +78,9 @@ public static class Game
             }
             else
             {
-                // 注册表游戏路径
+                // Registry game path
 
-                // 判断游戏路径
+                // Determine the game path
                 if (string.IsNullOrWhiteSpace(gameInfo.Dir))
                 {
                     LoggerHelper.Warn($"{gameType} The game path is empty, starting the game and terminating it {gameInfo.Dir}");
@@ -85,10 +90,10 @@ public static class Game
                     return;
                 }
 
-                // 判断游戏文件
+                // Determine game files
                 if (!File.Exists(execPath))
                 {
-                    LoggerHelper.Warn($"{gameType} The main program file of the game does not exist, and the game is terminated when starting it. {execPath}");
+                    LoggerHelper.Warn($"{gameType} The main program file of the game does not exist, and the game is terminated when starting it.{execPath}");
                     if (isNotice)
                         NotifierHelper.Warning($"{gameType} The main program file of the game does not exist, and the game is terminated when starting it.");
 
@@ -109,7 +114,7 @@ public static class Game
 
             ////////////////////////////////////////////////////////
 
-            // 处理旧的 LSX
+            // Handle old LSX
             if (gameInfo.IsOldLSX)
                 BattlelogHttpServer.BattlelogType = BattlelogType.BFH;
             else
@@ -125,15 +130,15 @@ public static class Game
             if (isNotice)
                 NotifierHelper.Notice($"{gameInfo.Name} Starting the game...");
 
-            // 获取当前进程所有环境变量名及其值
+            // Get all environment variable names and values ​​of the current process
             var environmentVariables = GetEnvironmentVariables();
 
-            // 直接赋值给字典，如果键已存在，则更新对应的值，否则则创建
+            //Assign directly to the dictionary. If the key already exists, update the corresponding value, otherwise create it.
             environmentVariables["EAFreeTrialGame"] = "false";
             environmentVariables["EAAuthCode"] = Account.OriginPCToken;
             environmentVariables["EALaunchOfflineMode"] = "false";
             environmentVariables["OriginSessionKey"] = "7102090b-ea9a-4531-9598-b2a7e943b544";
-            environmentVariables["EAGameLocale"] = "zh_TW";
+            environmentVariables["EAGameLocale"] = "en_US";
             environmentVariables["EALaunchEnv"] = "production";
             environmentVariables["EALaunchEAID"] = Account.PlayerName;
             environmentVariables["EALicenseToken"] = "114514";
@@ -152,65 +157,77 @@ public static class Game
             environmentVariables["ContentId"] = gameInfo.ContentId;
             environmentVariables["EAConnectionId"] = gameInfo.ContentId;
 
-            // 修复泰坦陨落2无法连接数据中心，傻逼重生
+            //Fixed the problem that Titanfall 2 could not connect to the data center, and the idiot was reborn.
             if (gameInfo.GameType is GameType.TTF2)
                 environmentVariables["OPENSSL_ia32cap"] = "~0x200000200000000";
 
-            // 初始化进程类实例
+            //Initialize process class instance
             var startInfo = new ProcessStartInfo
             {
                 UseShellExecute = false
             };
 
-            // 判断是否使用自定义路径启动游戏
+            // Determine whether to use a custom path to start the game
             if (gameInfo.IsUseCustom)
             {
-                // 自定义游戏路径
+                // Custom game path
 
                 if (gameInfo.GameType is GameType.ITT)
                 {
-                    // 双人成行
+                    // Two people make a trip
                     startInfo.FileName = Path.Combine(gameInfo.Dir2, "Nuts\\Binaries\\Win64", gameInfo.AppName);
                     startInfo.WorkingDirectory = Path.Combine(gameInfo.Dir2, "Nuts\\Binaries\\Win64", gameInfo.AppName);
                 }
+                else if (gameInfo.GameType is GameType.SWJFO)
+                {
+                    // Star Wars Jedi: Fallen Order
+                    startInfo.FileName = Path.Combine(gameInfo.Dir2, "SwGame\\Binaries\\Win64", gameInfo.AppName);
+                    startInfo.WorkingDirectory = Path.Combine(gameInfo.Dir2, "SwGame\\Binaries\\Win64", gameInfo.AppName);
+                }
                 else
                 {
-                    // 其他
+                    // other
                     startInfo.FileName = Path.Combine(gameInfo.Dir2, gameInfo.AppName);
                     startInfo.WorkingDirectory = gameInfo.Dir2;
                 }
 
-                // 启动参数
+                //Startup parameters
                 startInfo.Arguments = string.Concat(webArgs, " ", gameInfo.Args2).Trim();
             }
             else
             {
-                // 注册表游戏路径
+                // Registry game path
 
                 if (gameInfo.GameType is GameType.ITT)
                 {
-                    // 双人成行
+                    // Two people make a trip
                     startInfo.FileName = Path.Combine(gameInfo.Dir, "Nuts\\Binaries\\Win64", gameInfo.AppName);
                     startInfo.WorkingDirectory = Path.Combine(gameInfo.Dir, "Nuts\\Binaries\\Win64");
                 }
+                else if (gameInfo.GameType is GameType.SWJFO)
+                {
+                    // Star Wars Jedi: Fallen Order
+                    startInfo.FileName = Path.Combine(gameInfo.Dir, "SwGame\\Binaries\\Win64", gameInfo.AppName);
+                    startInfo.WorkingDirectory = Path.Combine(gameInfo.Dir, "SwGame\\Binaries\\Win64");
+                }
                 else
                 {
-                    // 其他
+                    // other
                     startInfo.FileName = Path.Combine(gameInfo.Dir, gameInfo.AppName);
                     startInfo.WorkingDirectory = gameInfo.Dir;
                 }
 
-                // 启动参数
+                //Startup parameters
                 startInfo.Arguments = string.Concat(webArgs, " ", gameInfo.Args).Trim();
             }
 
-            // 批量设置进程启动环境变量
+            // Set process startup environment variables in batches
             foreach (var variable in environmentVariables)
             {
                 startInfo.EnvironmentVariables[variable.Key] = variable.Value;
             }
 
-            // 启动程序
+            //Start program
             Process.Start(startInfo);
 
             LoggerHelper.Info($"Start the game {gameInfo.Name} success");

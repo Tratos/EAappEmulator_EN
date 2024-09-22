@@ -1,7 +1,7 @@
 ﻿namespace EAappEmulater.Views;
 
 /// <summary>
-/// AboutView.xaml 的交互逻辑
+///Interaction logic of AboutView.xaml
 /// </summary>
 public partial class AboutView : UserControl
 {

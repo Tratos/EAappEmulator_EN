@@ -1,41 +1,41 @@
-﻿using EAappEmulater.Api;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using EAappEmulater.Api;
 using EAappEmulater.Core;
-using EAappEmulater.Utils;
-using EAappEmulater.Views;
 using EAappEmulater.Helper;
 using EAappEmulater.Models;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
+using EAappEmulater.Utils;
+using EAappEmulater.Views;
 using Hardcodet.Wpf.TaskbarNotification;
 using Window = ModernWpf.Controls.Window;
 
 namespace EAappEmulater.Windows;
 
 /// <summary>
-/// MainWindow.xaml 的交互逻辑
+///Interaction logic of MainWindow.xaml
 /// </summary>
 public partial class MainWindow
 {
     /// <summary>
-    /// 导航字典
+    /// Navigation dictionary
     /// </summary>
     private readonly Dictionary<string, UserControl> NavDictionary = new();
     /// <summary>
-    /// 数据模型
+    /// Data model
     /// </summary>
     public MainModel MainModel { get; set; } = new();
 
     /// <summary>
-    /// 用于向外暴露主窗口实例
+    /// Used to expose the main window instance to the outside world
     /// </summary>
     public static Window MainWinInstance { get; private set; }
     /// <summary>
-    /// 窗口关闭识别标志
+    /// Window closing identification flag
     /// </summary>
     public static bool IsCodeClose { get; set; } = false;
 
     /// <summary>
-    /// 第一次通知标志
+    /// First notification flag
     /// </summary>
     private bool _isFirstNotice = false;
 
@@ -47,7 +47,7 @@ public partial class MainWindow
     }
 
     /// <summary>
-    /// 窗口加载完成事件
+    /// Window loading completion event
     /// </summary>
     private async void Window_Main_Loaded(object sender, RoutedEventArgs e)
     {
@@ -55,67 +55,67 @@ public partial class MainWindow
 
         Title = $"EA app emulator v{CoreUtil.VersionInfo}";
 
-        // 向外暴露主窗口实例
+        // Expose the main window instance to the outside world
         MainWinInstance = this;
-        // 重置窗口关闭标志
+        //Reset window close flag
         IsCodeClose = false;
 
-        // 首页导航
+        //Home navigation
         Navigate(NavDictionary.First().Key);
 
         //////////////////////////////////////////
 
-        // 玩家头像为空处理（仅有数据账号）
+        // The player avatar is empty (only data account)
         if (!string.IsNullOrWhiteSpace(Account.Remid) && string.IsNullOrWhiteSpace(Account.Avatar))
             MainModel.Avatar = "Default";
 
-        // 验证玩家头像与玩家头像Id是否一致
+        // Verify whether the player avatar is consistent with the player avatar ID
         if (!Account.Avatar.Contains(Account.AvatarId))
             MainModel.Avatar = "Default";
 
-        // 显示当前玩家登录账号
+        // Display the current player's login account
         MainModel.PlayerName = Account.PlayerName;
         MainModel.PersonaId = Account.PersonaId;
 
-        // 获取更新头像通知
+        // Get updated avatar notification
         WeakReferenceMessenger.Default.Register<string, string>(this, "LoadAvatar", (s, e) =>
         {
             MainModel.Avatar = Account.Avatar;
         });
 
-        // 初始化工作
+        //Initialization work
         Ready.Run();
 
-        // 检查更新（放到最后执行）
+        // Check for updates (executed last)
         await CheckUpdate();
     }
 
     /// <summary>
-    /// 窗口关闭事件
+    /// Window close event
     /// </summary>
     private void Window_Main_Closing(object sender, CancelEventArgs e)
     {
-        // 当用户从UI点击关闭时才执行
+        // Only executed when the user clicks to close from the UI
         if (!IsCodeClose)
         {
-            // 取消关闭事件，隐藏主窗口
+            // Cancel the close event and hide the main window
             e.Cancel = true;
             this.Hide();
 
-            // 仅第一次通知
+            // Notify only for the first time
             if (!_isFirstNotice)
             {
-                NotifyIcon_Main.ShowBalloonTip("EA app The emulator is minimized to the tray", "You can completely exit the program through the tray right-click menu", BalloonIcon.Info);
+                NotifyIcon_Main.ShowBalloonTip("EA app simulator has been minimized to the tray", "You can completely exit the program through the tray right-click menu", BalloonIcon.Info);
                 _isFirstNotice = true;
             }
 
             return;
         }
 
-        // 清理工作
+        // Cleanup work
         Ready.Stop();
 
-        // 释放托盘图标
+        // Release the tray icon
         NotifyIcon_Main?.Dispose();
         NotifyIcon_Main = null;
 
@@ -123,7 +123,7 @@ public partial class MainWindow
     }
 
     /// <summary>
-    /// 创建页面
+    /// Create page
     /// </summary>
     private void CreateView()
     {
@@ -139,7 +139,7 @@ public partial class MainWindow
     }
 
     /// <summary>
-    /// View页面导航
+    /// View page navigation
     /// </summary>
     [RelayCommand]
     private void Navigate(string viewName)
@@ -154,17 +154,17 @@ public partial class MainWindow
     }
 
     /// <summary>
-    /// 检查更新
+    /// Check for updates
     /// </summary>
     private async Task CheckUpdate()
     {
         LoggerHelper.Info("Detecting new version...");
         NotifierHelper.Notice("Detecting new version...");
 
-        // 最多执行4次
+        // Execute up to 4 times
         for (int i = 0; i <= 4; i++)
         {
-            // 当第4次还是失败，终止程序
+            // When it still fails for the fourth time, terminate the program
             if (i > 3)
             {
                 IconHyperlink_Update.Text = $"Found a new version, click to download the update";
@@ -175,10 +175,10 @@ public partial class MainWindow
                 return;
             }
 
-            // 第1次不提示重试
+            // Retry without prompting for the first time
             if (i > 0)
             {
-                LoggerHelper.Warn($"Failed to detect new version, start the next {i} Retrying...");
+                LoggerHelper.Warn($"Failed to detect new version, starting the {i} retry...");
             }
 
             var webVersion = await CoreApi.GetWebUpdateVersion();
@@ -186,12 +186,12 @@ public partial class MainWindow
             {
                 if (CoreUtil.VersionInfo >= webVersion)
                 {
-                    LoggerHelper.Info($"Congratulations，Currently the latest version {CoreUtil.VersionInfo}");
-                    NotifierHelper.Info($"Congratulations，Currently the latest version {CoreUtil.VersionInfo}");
+                    LoggerHelper.Info($"Congratulations, this is the latest version {CoreUtil.VersionInfo}");
+                    NotifierHelper.Info($"Congratulations, this is the latest version {CoreUtil.VersionInfo}");
                     return;
                 }
 
-                IconHyperlink_Update.Text = $"new version found v{webVersion}，Click to download updates";
+                IconHyperlink_Update.Text = $"Found new version v{webVersion}，Click to download updates";
                 IconHyperlink_Update.Visibility = Visibility.Visible;
 
                 LoggerHelper.Info($"Found the latest version, please go to the official website to download the latest version {webVersion}");
@@ -218,21 +218,21 @@ public partial class MainWindow
     {
         var accountWindow = new AccountWindow();
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = accountWindow;
-        // 设置关闭标志
+        //Set the close flag
         IsCodeClose = true;
-        // 关闭主窗口
+        // Close the main window
         this.Close();
 
-        // 显示更换账号窗口
+        //Display the change account window
         accountWindow.Show();
     }
 
     [RelayCommand]
     private void ExitApp()
     {
-        // 设置关闭标志
+        //Set the close flag
         IsCodeClose = true;
         this.Close();
     }

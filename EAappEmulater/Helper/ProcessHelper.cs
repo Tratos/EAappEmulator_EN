@@ -3,7 +3,7 @@
 public static class ProcessHelper
 {
     /// <summary>
-    /// 判断进程是否运行
+    /// Determine whether the process is running
     /// </summary>
     public static bool IsAppRun(string appName)
     {
@@ -17,7 +17,7 @@ public static class ProcessHelper
     }
 
     /// <summary>
-    /// 打开http链接
+    /// Open http link
     /// </summary>
     public static void OpenLink(string url)
     {
@@ -38,7 +38,7 @@ public static class ProcessHelper
     }
 
     /// <summary>
-    /// 打开文件夹路径
+    /// Open the folder path
     /// </summary>
     public static void OpenDirectory(string dirPath)
     {
@@ -59,7 +59,7 @@ public static class ProcessHelper
     }
 
     /// <summary>
-    /// 打开指定进程（支持静默）
+    /// Open the specified process (supports silent)
     /// </summary>
     public static void OpenProcess(string appPath, bool isSilent = false)
     {
@@ -73,8 +73,8 @@ public static class ProcessHelper
 
         try
         {
-            // 如果应在启动进程时使用 shell，则为 true；如果直接从可执行文件创建进程，则为 false。
-            // 默认值为 true .NET Framework 应用和 false .NET Core 应用。
+            // true if the shell should be used when starting the process; false if the process is created directly from the executable file.
+            // Default is true for .NET Framework apps and false for .NET Core apps.
             var processInfo = new ProcessStartInfo
             {
                 UseShellExecute = true,
@@ -98,9 +98,9 @@ public static class ProcessHelper
     }
 
     /// <summary>
-    /// 根据名字关闭指定进程
+    /// Close the specified process based on its name
     /// </summary>
-    public static async Task CloseProcess(string appName)
+    public static void CloseProcess(string appName)
     {
         if (string.IsNullOrWhiteSpace(appName))
             return;
@@ -110,18 +110,18 @@ public static class ProcessHelper
 
         try
         {
-            var isSuccess = false;
+            var isFind = false;
 
             foreach (var process in Process.GetProcessesByName(appName))
             {
+                //Close the process tree
                 process.Kill(true);
-                await process.WaitForExitAsync();
-                isSuccess = true;
+                LoggerHelper.Info($"Close process successfully {appName}.exe");
+
+                isFind = true;
             }
 
-            if (isSuccess)
-                LoggerHelper.Info($"Close process successfully {appName}.exe");
-            else
+            if (!isFind)
                 LoggerHelper.Warn($"Process information not found {appName}.exe");
         }
         catch (Exception ex)

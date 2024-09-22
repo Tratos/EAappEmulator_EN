@@ -7,7 +7,7 @@ public static class EaCrypto
     private const int _prime_30000th = 350377;
 
     /// <summary>
-    /// 获取 RTP 握手码
+    /// Get RTP handshake code
     /// </summary>
     public static string GetRTPHandshakeCode()
     {
@@ -24,7 +24,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 通过字符串获取特殊字节数组
+    /// Get special byte array through string
     /// </summary>
     public static byte[] GetByteArray(string data)
     {
@@ -62,7 +62,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 字节数组转十六进制字符串
+    /// Convert byte array to hexadecimal string
     /// </summary>
     public static string ByteArrayToHex(byte[] bytes)
     {
@@ -77,11 +77,11 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 通过秘钥获取 ASE 加密对象
+    /// Obtain the ASE encryption object through the secret key
     /// </summary>
     public static Aes GetAesByKey(byte[] key)
     {
-        // 这里不能使用 using，否则对象会提前释放
+        // You cannot use using here, otherwise the object will be released early
         var aes = Aes.Create();
         aes.Key = key;
         aes.Mode = CipherMode.ECB;
@@ -91,7 +91,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 解密
+    /// Decrypt
     /// </summary>
     public static string Decrypt(byte[] bytes)
     {
@@ -108,7 +108,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 解密
+    /// Decrypt
     /// </summary>
     public static string Decrypt(Aes aes, byte[] bytes)
     {
@@ -130,7 +130,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 加密
+    /// Encryption
     /// </summary>
     public static string Encrypt(Aes aes, byte[] bytes)
     {
@@ -152,7 +152,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 检查 Challenge 响应
+    /// Check Challenge response
     /// </summary>
     public static bool CheckChallengeResponse(string response, string key)
     {
@@ -170,7 +170,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 处理 Challenge 响应
+    /// Handle Challenge response
     /// </summary>
     public static string MakeChallengeResponse(string key)
     {
@@ -181,7 +181,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// 获取 LSX 秘钥
+    /// Get LSX key
     /// </summary>
     public static byte[] GetLSXKey(ushort seed)
     {
@@ -199,7 +199,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// BF4 LSX 解密
+    /// BF4 LSX decryption
     /// </summary>
     public static string LSXDecryptBF4(string data, ushort seed)
     {
@@ -215,7 +215,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// BF4 LSX 加密
+    /// BF4 LSX encryption
     /// </summary>
     public static string LSXEncryptBF4(string data, ushort seed)
     {
@@ -231,7 +231,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// BFH LSX 解密
+    /// BFH LSX decryption
     /// </summary>
     public static string LSXDecryptBFH(string data)
     {
@@ -245,7 +245,7 @@ public static class EaCrypto
     }
 
     /// <summary>
-    /// BFH LSX 加密
+    /// BFH LSX encryption
     /// </summary>
     public static string LSXEncryptBFH(string data)
     {

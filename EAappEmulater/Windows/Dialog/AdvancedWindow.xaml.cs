@@ -1,13 +1,13 @@
-﻿using EAappEmulater.Core;
+﻿using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Core;
 using EAappEmulater.Enums;
 using EAappEmulater.Helper;
 using EAappEmulater.Models;
-using CommunityToolkit.Mvvm.Input;
 
 namespace EAappEmulater.Windows;
 
 /// <summary>
-/// AdvancedWindow.xaml 的交互逻辑
+///Interaction logic of AdvancedWindow.xaml
 /// </summary>
 public partial class AdvancedWindow
 {
@@ -56,7 +56,7 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 窗口加载完成事件
+    /// Window loading completion event
     /// </summary>
     private void Window_Advanced_Loaded(object sender, RoutedEventArgs e)
     {
@@ -64,14 +64,14 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 窗口关闭事件
+    /// Window close event
     /// </summary>
     private void Window_Advanced_Closing(object sender, CancelEventArgs e)
     {
     }
 
     /// <summary>
-    /// 选择文件
+    /// Select file
     /// </summary>
     [RelayCommand]
     private void SelcetFilePath()
@@ -96,14 +96,14 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 保存设置
+    /// Save settings
     /// </summary>
     [RelayCommand]
     private void SaveOption()
     {
         Base.GameInfoDb[_gameInfo.GameType].IsUseCustom = AdvancedModel.IsUseCustom;
 
-        // GameDir 注册表获取，禁止修改
+        // GameDir registry acquisition, modification is prohibited
         Base.GameInfoDb[_gameInfo.GameType].Args = AdvancedModel.GameArgs;
 
         Base.GameInfoDb[_gameInfo.GameType].Dir2 = AdvancedModel.GameDir2;
@@ -115,7 +115,7 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 取消设置
+    /// Cancel setting
     /// </summary>
     [RelayCommand]
     private void CancelOption()
@@ -124,7 +124,7 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 获取注册表游戏语言信息
+    /// Get registry game language information
     /// </summary>
     private void GetGameLocale()
     {
@@ -152,7 +152,7 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 设置注册表游戏语言信息
+    ///Set registry game language information
     /// </summary>
     private void SetGameLocale()
     {
@@ -173,7 +173,7 @@ public partial class AdvancedWindow
     }
 
     /// <summary>
-    /// 按住鼠标左键移动窗口
+    /// Press and hold the left mouse button to move the window
     /// </summary>
     private void Image_Game_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {

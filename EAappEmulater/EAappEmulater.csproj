@@ -44,12 +44,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.0" />
         <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
-        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2592.51" />
-        <PackageReference Include="NLog" Version="5.3.2" />
+        <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2739.15" />
+        <PackageReference Include="NLog" Version="5.3.3" />
         <PackageReference Include="Notification.Wpf" Version="8.0.0" />
-        <PackageReference Include="RestSharp" Version="111.4.0" />
+        <PackageReference Include="RestSharp" Version="112.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -119,6 +119,7 @@
         <Resource Include="Assets\Images\Games\BFH.jpg" />
         <Resource Include="Assets\Images\Games\BFV.jpg" />
         <Resource Include="Assets\Images\Games\F123.jpg" />
+        <Resource Include="Assets\Images\Games\F124.jpg" />
         <Resource Include="Assets\Images\Games\FC24.jpg" />
         <Resource Include="Assets\Images\Games\FIFA23.jpg" />
         <Resource Include="Assets\Images\Games\NFS22.jpg" />
@@ -132,6 +133,12 @@
         <Resource Include="Assets\Images\Games\ITT.jpg" />
         <Resource Include="Assets\Images\Games\FIFA22.jpg" />
         <Resource Include="Assets\Images\Games\NFS19.jpg" />
+        <Resource Include="Assets\Images\Games\PGA.jpg" />
+        <Resource Include="Assets\Images\Games\ANTHEM.jpg" />
+        <Resource Include="Assets\Images\Games\NFS18.jpg" />
+        <Resource Include="Assets\Images\Games\SWJFO.jpg" />
+        <Resource Include="Assets\Images\Games\SWSD.jpg" />
+        <Resource Include="Assets\Images\Games\MOHW.jpg" />
         <Resource Include="Assets\Images\Regions\ar_SA.png" />
         <Resource Include="Assets\Images\Regions\cs_CZ.png" />
         <Resource Include="Assets\Images\Regions\da_DK.png" />

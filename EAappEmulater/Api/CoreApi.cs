@@ -24,21 +24,24 @@ public static class CoreApi
     {
         try
         {
-            var request = new RestRequest("https://api.battlefield.vip/eaapp/update.txt", Method.Get);
+            var request = new RestRequest("https://api.github.com/repos/Tratos/EAappEmulator_EN/releases", Method.Get);
 
             var response = await _client.ExecuteAsync(request);
-            LoggerHelper.Info($"GetWebUpdateVersion Request ended, status {response.ResponseStatus}");
-            LoggerHelper.Info($"GetWebUpdateVersion Request ended, status code {response.StatusCode}");
+            LoggerHelper.Info($"GetWebUpdateVersion request ended, status {response.ResponseStatus}");
+            LoggerHelper.Info($"GetWebUpdateVersion request ends, status code {response.StatusCode}");
 
             if (response.ResponseStatus == ResponseStatus.TimedOut)
             {
-                LoggerHelper.Info($"GetWebUpdateVersion Request timed out");
+                LoggerHelper.Info($"GetWebUpdateVersion request timed out");
                 return null;
             }
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                if (Version.TryParse(response.Content, out Version version))
+                var jsonNode = JsonNode.Parse(response.Content);
+
+                var tagName = jsonNode["tag_name"].GetValue<string>();
+                if (Version.TryParse(tagName, out Version version))
                 {
                     LoggerHelper.Info($"Obtained server update version number successfully {version}");
                     return version;
@@ -56,7 +59,7 @@ public static class CoreApi
     }
 
     /// <summary>
-    /// 下载网络图片
+    /// Download Internet pictures
     /// </summary>
     public static async Task<bool> DownloadWebImage(string imgUrl, string savePath)
     {
@@ -76,7 +79,7 @@ public static class CoreApi
         }
         catch (Exception ex)
         {
-            LoggerHelper.Error($"An exception occurred when downloading network pictures {imgUrl}", ex);
+            LoggerHelper.Error($"An exception occurred while downloading network images. {imgUrl}", ex);
             return false;
         }
     }

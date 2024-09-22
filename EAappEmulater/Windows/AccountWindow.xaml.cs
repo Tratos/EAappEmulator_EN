@@ -1,13 +1,13 @@
-﻿using EAappEmulater.Core;
-using EAappEmulater.Utils;
+﻿using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Core;
 using EAappEmulater.Helper;
 using EAappEmulater.Models;
-using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Utils;
 
 namespace EAappEmulater.Windows;
 
 /// <summary>
-/// AccountWindow.xaml 的交互逻辑
+/// Interaction logic of AccountWindow.xaml
 /// </summary>
 public partial class AccountWindow
 {
@@ -19,57 +19,53 @@ public partial class AccountWindow
     }
 
     /// <summary>
-    /// 窗口加载完成事件
+    /// Window loading completion event
     /// </summary>
     private void Window_Account_Loaded(object sender, RoutedEventArgs e)
     {
         Title = $"EA app emulator v{CoreUtil.VersionInfo}";
 
-        // 遍历读取10个配置文件槽
+        // Traverse and read 10 configuration file slots
         foreach (var item in Account.AccountPathDb)
         {
             var account = new AccountInfo()
             {
-                // 账号槽
+                //Account slot
                 AccountSlot = item.Key,
-                // 仅展示用
+                // only for display
                 PlayerName = IniHelper.ReadString("Account", "PlayerName", item.Value),
                 AvatarId = IniHelper.ReadString("Account", "AvatarId", item.Value),
                 Avatar = IniHelper.ReadString("Account", "Avatar", item.Value),
-                // 可被修改
+                // can be modified
                 Remid = IniHelper.ReadString("Cookie", "Remid", item.Value),
                 Sid = IniHelper.ReadString("Cookie", "Sid", item.Value)
             };
 
-            // 玩家头像为空处理（仅有Cookie数据）
+            // The player avatar is empty (only cookie data)
             if (!string.IsNullOrWhiteSpace(account.Remid) && string.IsNullOrWhiteSpace(account.Avatar))
                 account.Avatar = "Default";
 
-            // 验证玩家头像与玩家头像Id是否一致
-            if (!account.Avatar.Contains(account.AvatarId))
-                account.Avatar = "Default";
-
-            // 添加到动态集合中
+            //Add to dynamic collection
             ObsCol_AccountInfos.Add(account);
         }
 
         ////////////////////////////////
 
-        // 读取全局配置文件
+        //Read global configuration file
         Globals.Read();
-        // 设置上次选中配置槽
+        //Set the last selected configuration slot
         ListBox_AccountInfo.SelectedIndex = (int)Globals.AccountSlot;
     }
 
     /// <summary>
-    /// 窗口内容呈现完毕后事件
+    /// Event after window content is rendered
     /// </summary>
     private void Window_Account_ContentRendered(object sender, EventArgs e)
     {
     }
 
     /// <summary>
-    /// 窗口关闭时事件
+    /// Event when the window is closed
     /// </summary>
     private void Window_Account_Closing(object sender, CancelEventArgs e)
     {
@@ -77,17 +73,17 @@ public partial class AccountWindow
     }
 
     /// <summary>
-    /// 保存账号Cookie
+    /// Save account cookie
     /// </summary>
     private bool SaveAccountCookie(bool isReset = false)
     {
         if (ListBox_AccountInfo.SelectedItem is not AccountInfo account)
             return false;
 
-        // 设置当前选择配置槽
+        //Set the currently selected configuration slot
         Globals.AccountSlot = account.AccountSlot;
 
-        // 仅更换新账号使用
+        // Only use when changing to new account
         if (isReset)
         {
             account.PlayerName = string.Empty;
@@ -106,14 +102,14 @@ public partial class AccountWindow
             IniHelper.WriteString("Cookie", "Sid", item.Sid, path);
         }
 
-        // 保存全局配置文件
+        //Save global configuration file
         Globals.Write();
 
         return true;
     }
 
     /// <summary>
-    /// 打开配置文件
+    /// Open configuration file
     /// </summary>
     [RelayCommand]
     private void OpenConfigFolder()
@@ -122,12 +118,12 @@ public partial class AccountWindow
     }
 
     /// <summary>
-    /// 登录选中账号
+    /// Log in to the selected account
     /// </summary>
     [RelayCommand]
     private void LoginAccount()
     {
-        // 保存数据
+        // save data
         if (!SaveAccountCookie())
             return;
 
@@ -135,22 +131,22 @@ public partial class AccountWindow
 
         var loadWindow = new LoadWindow();
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = loadWindow;
-        // 关闭当前窗口
+        // Close the current window
         this.Close();
 
-        // 显示初始化窗口
+        //Show initialization window
         loadWindow.Show();
     }
 
     /// <summary>
-    /// 获取Cookie
+    /// Get Cookie
     /// </summary>
     [RelayCommand]
     private void GetCookie()
     {
-        // 保存数据
+        // save data
         if (!SaveAccountCookie())
             return;
 
@@ -158,26 +154,26 @@ public partial class AccountWindow
 
         var loginWindow = new LoginWindow(false);
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = loginWindow;
-        // 关闭当前窗口
+        // Close the current window
         this.Close();
 
-        // 显示登录窗口
+        //Show login window
         loginWindow.Show();
     }
 
     /// <summary>
-    /// 更换账号
+    /// Change account
     /// </summary>
     [RelayCommand]
     private void ChangeAccount()
     {
-        // 保存数据
+        // save data
         if (!SaveAccountCookie(true))
             return;
 
-        // 清空当前账号信息
+        // Clear current account information
         Account.Reset();
         Account.Write();
 
@@ -185,12 +181,12 @@ public partial class AccountWindow
 
         var loginWindow = new LoginWindow(true);
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = loginWindow;
-        // 关闭当前窗口
+        // Close the current window
         this.Close();
 
-        // 显示登录窗口
+        //Show login window
         loginWindow.Show();
     }
 }

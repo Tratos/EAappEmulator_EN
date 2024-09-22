@@ -141,8 +141,8 @@ public static class Base
         GameInfoDb[GameType.F123] = new()
         {
             GameType = GameType.F123,
-            Name = "F1 23",
-            Name2 = "EA SPORTS™ F1 23",
+            Name = "EA SPORTS™ F1® 23",
+            Name2 = "EA SPORTS™ F1® 23",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/F123.jpg",
             IsUseCustom = false,
             Dir = string.Empty,
@@ -162,7 +162,7 @@ public static class Base
         GameInfoDb[GameType.FC24] = new()
         {
             GameType = GameType.FC24,
-            Name = "FC™ 24",
+            Name = "EA SPORTS FC™ 24",
             Name2 = "EA SPORTS FC™ 24",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/FC24.jpg",
             IsUseCustom = false,
@@ -183,7 +183,7 @@ public static class Base
         GameInfoDb[GameType.FIFA22] = new()
         {
             GameType = GameType.FIFA22,
-            Name = "FIFA 22",
+            Name = "EA SPORTS™ FIFA 22",
             Name2 = "EA SPORTS™ FIFA 22",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/FIFA22.jpg",
             IsUseCustom = false,
@@ -204,7 +204,7 @@ public static class Base
         GameInfoDb[GameType.FIFA23] = new()
         {
             GameType = GameType.FIFA23,
-            Name = "FIFA 23",
+            Name = "EA SPORTS™ FIFA 23",
             Name2 = "EA SPORTS™ FIFA 23",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/FIFA23.jpg",
             IsUseCustom = false,
@@ -246,7 +246,7 @@ public static class Base
         GameInfoDb[GameType.NFS19] = new()
         {
             GameType = GameType.NFS19,
-            Name = "Need for Speed 19",
+            Name = "Need for Speed™ 19",
             Name2 = "Need for Speed™",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/NFS19.jpg",
             IsUseCustom = false,
@@ -267,7 +267,7 @@ public static class Base
         GameInfoDb[GameType.NFS21] = new()
         {
             GameType = GameType.NFS21,
-            Name = "Need for Speed Heat",
+            Name = "Need for Speed™ Heat",
             Name2 = "Need for Speed™ Heat",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/NFS21.jpg",
             IsUseCustom = false,
@@ -288,7 +288,7 @@ public static class Base
         GameInfoDb[GameType.NFS22] = new()
         {
             GameType = GameType.NFS22,
-            Name = "Need For Speed Unbound",
+            Name = "Need For Speed™ : Unbound",
             Name2 = "Need For Speed™ : Unbound",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/NFS22.jpg",
             IsUseCustom = false,
@@ -432,9 +432,156 @@ public static class Base
             IsOldLSX = false
         };
 
+        GameInfoDb[GameType.F124] = new()
+        {
+            GameType = GameType.F124,
+            Name = "EA SPORTS™ F1® 24",
+            Name2 = "EA SPORTS™ F1® 24",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/F124.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = true,
+            AppName = "EAAntiCheat.GameServiceLauncher.exe",
+            ContentId = "16425782",
+            Regedit = "SOFTWARE\\Codemasters\\F1_24",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\Codemasters\\F1_24",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "zh_CN", "ar_SA", "es_MX" },
+            IsOldLSX = false
+        };
+
+        GameInfoDb[GameType.PGA] = new()
+        {
+            GameType = GameType.PGA,
+            Name = "PGA Tour",
+            Name2 = "PGA Tour",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/PGA.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "PGATour.exe",
+            ContentId = "16425629",
+            Regedit = "SOFTWARE\\EA Sports\\PGA Tour",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\EA Sports\\PGA Tour",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "zh_CN", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = false
+        };
+
+        GameInfoDb[GameType.ANTHEM] = new()
+        {
+            GameType = GameType.ANTHEM,
+            Name = "Anthem",
+            Name2 = "Anthem",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/ANTHEM.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "Anthem.exe",
+            ContentId = "1034365",
+            Regedit = "SOFTWARE\\BioWare\\Anthem",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\BioWare\\Anthem",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "zh_CN", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = false
+        };
+
+        GameInfoDb[GameType.NFS18] = new()
+        {
+            GameType = GameType.NFS18,
+            Name = "Need for Speed: Rivals",
+            Name2 = "Need for Speed: Rivals",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/NFS18.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "NFS14.exe",
+            ContentId = "1004776",
+            Regedit = "SOFTWARE\\EA Games\\Need for Speed(TM) Rivals",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\EA Games\\Need for Speed(TM) Rivals",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = true
+        };
+
+        GameInfoDb[GameType.SWSD] = new()
+        {
+            GameType = GameType.SWSD,
+            Name = "STAR WARS™: Squadrons",
+            Name2 = "STAR WARS™: Squadrons",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/SWSD.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "starwarssquadrons_launcher.exe",
+            ContentId = "16124549",
+            Regedit = "SOFTWARE\\EA Games\\STAR WARS Squadrons",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\EA Games\\STAR WARS Squadrons",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "zh_CN", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = false
+        };
+
+        GameInfoDb[GameType.SWJFO] = new()
+        {
+            GameType = GameType.SWJFO,
+            Name = "STAR WARS Jedi - Fallen Order™",
+            Name2 = "STAR WARS Jedi - Fallen Order™",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/SWJFO.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "starwarsjedifallenorder.exe",
+            ContentId = "196485",
+            Regedit = "SOFTWARE\\Respawn\\Jedi Fallen Order",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\Respawn\\Jedi Fallen Order",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "zh_CN", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = false
+        };
+
+        GameInfoDb[GameType.MOHW] = new()
+        {
+            GameType = GameType.MOHW,
+            Name = "Medal of Honor™ Warfighter",
+            Name2 = "Medal of Honor™ Warfighter",
+            Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Games/MOHW.jpg",
+            IsUseCustom = false,
+            Dir = string.Empty,
+            Args = string.Empty,
+            Dir2 = string.Empty,
+            Args2 = string.Empty,
+            IsInstalled = false,
+            IsEAAC = false,
+            AppName = "Launcher.exe",
+            ContentId = "71702",
+            Regedit = "SOFTWARE\\Danger Close Games\\Medal of Honor Warfighter",
+            Regedit2 = "SOFTWARE\\WOW6432Node\\Danger Close Games\\Medal of Honor Warfighter",
+            Locales = new() { "en_GB", "en_US", "fr_FR", "de_DE", "it_IT", "es_ES", "ja_JP", "nl_NL", "pl_PL", "pt_BR", "ar_SA", "es_MX", "zh_TW" },
+            IsOldLSX = true
+        };
+
         ////////////////////////////////////////////////////
 
-        // 提前缓存游戏注册表信息
+        //Cache game registry information in advance
         foreach (var item in GameInfoDb)
         {
             GameRegistryDb.Add(item.Value.ContentId, new()
@@ -449,21 +596,21 @@ public static class Base
         GameLocaleDb["NULL"] = new()
         {
             Code = "NULL",
-            Name = "unknow",
+            Name = "unknown language",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/NULL.png"
         };
 
         GameLocaleDb["ar_SA"] = new()
         {
             Code = "ar_SA",
-            Name = "arabic",
+            Name = "Arabic",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/ar_SA.png"
         };
 
         GameLocaleDb["cs_CZ"] = new()
         {
             Code = "cs_CZ",
-            Name = "czech",
+            Name = "Czech",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/cs_CZ.png"
         };
 
@@ -477,70 +624,70 @@ public static class Base
         GameLocaleDb["de_DE"] = new()
         {
             Code = "de_DE",
-            Name = "german",
+            Name = "German",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/de_DE.png"
         };
 
         GameLocaleDb["en_GB"] = new()
         {
             Code = "en_GB",
-            Name = "english - United Kingdom",
+            Name = "English - United Kingdom",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/en_GB.png"
         };
 
         GameLocaleDb["en_US"] = new()
         {
             Code = "en_US",
-            Name = "english",
+            Name = "English",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/en_US.png"
         };
 
         GameLocaleDb["es_ES"] = new()
         {
             Code = "es_ES",
-            Name = "spanish - Spain",
+            Name = "Spanish - Spain",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/es_ES.png"
         };
 
         GameLocaleDb["es_MX"] = new()
         {
             Code = "es_MX",
-            Name = "spanish - Latin America",
+            Name = "Spanish - Latin America",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/es_MX.png"
         };
 
         GameLocaleDb["fr_FR"] = new()
         {
             Code = "fr_FR",
-            Name = "french",
+            Name = "French",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/fr_FR.png"
         };
 
         GameLocaleDb["it_IT"] = new()
         {
             Code = "it_IT",
-            Name = "italian",
+            Name = "Italian",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/it_IT.png"
         };
 
         GameLocaleDb["ja_JP"] = new()
         {
             Code = "ja_JP",
-            Name = "japanese",
+            Name = "Japanese",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/ja_JP.png"
         };
 
         GameLocaleDb["ko_KR"] = new()
         {
             Code = "ko_KR",
-            Name = "korean",
+            Name = "Korean",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/ko_KR.png"
         };
 
         GameLocaleDb["nl_NL"] = new()
         {
             Code = "nl_NL",
-            Name = "dutch",
+            Name = "Dutch",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/nl_NL.png"
         };
 
@@ -554,35 +701,35 @@ public static class Base
         GameLocaleDb["pl_PL"] = new()
         {
             Code = "pl_PL",
-            Name = "polish",
+            Name = "Polish",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/pl_PL.png"
         };
 
         GameLocaleDb["pt_BR"] = new()
         {
             Code = "pt_BR",
-            Name = "portuguese - Brazil",
+            Name = "Portuguese - Brazil",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/pt_BR.png"
         };
 
         GameLocaleDb["pt_PT"] = new()
         {
             Code = "pt_PT",
-            Name = "portuguese",
+            Name = "Portuguese",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/pt_PT.png"
         };
 
         GameLocaleDb["ru_RU"] = new()
         {
             Code = "ru_RU",
-            Name = "russian",
+            Name = "Russian",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/ru_RU.png"
         };
 
         GameLocaleDb["sv_SE"] = new()
         {
             Code = "sv_SE",
-            Name = "swedish",
+            Name = "Swedish",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/sv_SE.png"
         };
 
@@ -596,21 +743,21 @@ public static class Base
         GameLocaleDb["zh_CN"] = new()
         {
             Code = "zh_CN",
-            Name = "simplified Chinese",
+            Name = "Simplified Chinese",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/zh_CN.png"
         };
 
         GameLocaleDb["zh_HK"] = new()
         {
             Code = "zh_HK",
-            Name = "traditional Chinese",
+            Name = "Traditional Chinese",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/zh_HK.png"
         };
 
         GameLocaleDb["zh_TW"] = new()
         {
             Code = "zh_TW",
-            Name = "traditional Chinese",
+            Name = "Traditional Chinese",
             Image = "pack://application:,,,/EAappEmulater;component/Assets/Images/Regions/zh_TW.png"
         };
     }

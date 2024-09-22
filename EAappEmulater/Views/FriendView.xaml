@@ -103,7 +103,7 @@
 
             <ui:IconHeader Title="FriendType" DockPanel.Dock="Top" />
             <ui:TextBoxHint
-                Hint="Display FriendType information of selected player"
+                Hint="Display the FriendType information of the selected player"
                 IsReadOnly="True"
                 Text="{Binding ElementName=ListBox_FriendInfo, Path=SelectedItem.FriendType}" />
 

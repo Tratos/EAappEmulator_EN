@@ -1,6 +1,6 @@
 ﻿using EAappEmulater.Enums;
-using EAappEmulater.Utils;
 using EAappEmulater.Helper;
+using EAappEmulater.Utils;
 
 namespace EAappEmulater.Core;
 
@@ -31,7 +31,7 @@ public static class Account
 
     static Account()
     {
-        // 批量创建账号槽配置文件
+        // Create account slot configuration files in batches
         foreach (int value in Enum.GetValues(typeof(AccountSlot)))
         {
             var path = Path.Combine(CoreUtil.Dir_Account, $"Account{value}.ini");
@@ -44,7 +44,7 @@ public static class Account
     }
 
     /// <summary>
-    /// 获取当前配置文件路径
+    /// Get the current configuration file path
     /// </summary>
     public static void GetIniPath()
     {
@@ -52,12 +52,12 @@ public static class Account
     }
 
     /// <summary>
-    /// 重置配置文件
+    /// Reset configuration file
     /// </summary>
     public static void Reset()
     {
         GetIniPath();
-        LoggerHelper.Info($" {_iniPath}");
+        LoggerHelper.Info($"Current reset configuration file path {_iniPath}");
 
         PlayerName = string.Empty;
         PersonaId = string.Empty;
@@ -74,12 +74,12 @@ public static class Account
     }
 
     /// <summary>
-    /// 读取配置文件
+    /// Read configuration file
     /// </summary>
     public static void Read()
     {
         GetIniPath();
-        LoggerHelper.Info($"Current reset configuration file path {_iniPath}");
+        LoggerHelper.Info($"Current read configuration file path {_iniPath}");
 
         PlayerName = ReadString("Account", "PlayerName");
         PersonaId = ReadString("Account", "PersonaId");
@@ -87,7 +87,7 @@ public static class Account
         AvatarId = ReadString("Account", "AvatarId");
 
         var avatar = ReadString("Account", "Avatar");
-        // 玩家头像存在，并在玩家头像名称和头像Id一致
+        // The player avatar exists, and the player avatar name and avatar ID are consistent
         if (File.Exists(avatar) && Path.GetFileNameWithoutExtension(avatar) == AvatarId)
             Avatar = avatar;
         else
@@ -106,7 +106,7 @@ public static class Account
 
             item.Value.IsUseCustom = ReadBoolean(key, "IsUseCustom");
 
-            item.Value.Dir = ReadString(key, "Dir");
+            //item.Value.Dir = ReadString(key, "Dir");
             item.Value.Args = ReadString(key, "Args");
             item.Value.Dir2 = ReadString(key, "Dir2");
             item.Value.Args2 = ReadString(key, "Args2");
@@ -114,7 +114,7 @@ public static class Account
     }
 
     /// <summary>
-    /// 保存配置文件
+    /// Save configuration file
     /// </summary>
     public static void Write()
     {
@@ -140,7 +140,7 @@ public static class Account
 
             WriteBoolean(key, "IsUseCustom", item.Value.IsUseCustom);
 
-            WriteString(key, "Dir", item.Value.Dir);
+            //WriteString(key, "Dir", item.Value.Dir);
             WriteString(key, "Args", item.Value.Args);
             WriteString(key, "Dir2", item.Value.Dir2);
             WriteString(key, "Args2", item.Value.Args2);

@@ -9,7 +9,7 @@ public static class IniHelper
     private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
     /// <summary>
-    /// 读取节点值
+    /// Read node value
     /// </summary>
     private static string ReadValue(string section, string key, string iniPath)
     {
@@ -19,16 +19,16 @@ public static class IniHelper
     }
 
     /// <summary>
-    /// 写入节点值
+    ///Write node value
     /// </summary>
     private static void WriteValue(string section, string key, string value, string iniPath)
     {
         WritePrivateProfileString(section, key, value, iniPath);
     }
 
-    #region 读取操作
+    #region read operation
     /// <summary>
-    /// 读取字符串
+    /// Read string
     /// </summary>
     public static string ReadString(string section, string key, string iniPath)
     {
@@ -36,7 +36,7 @@ public static class IniHelper
     }
 
     /// <summary>
-    /// 读取布尔值
+    /// Read Boolean value
     /// </summary>
     public static bool ReadBoolean(string section, string key, string iniPath)
     {
@@ -45,7 +45,7 @@ public static class IniHelper
     }
 
     /// <summary>
-    /// 读取整数值
+    /// Read integer value
     /// </summary>
     public static int ReadInt(string section, string key, string iniPath)
     {
@@ -58,9 +58,9 @@ public static class IniHelper
     }
     #endregion
 
-    #region 写入操作
+    #region write operation
     /// <summary>
-    /// 写入字符串
+    /// Write string
     /// </summary>
     public static void WriteString(string section, string key, string value, string iniPath)
     {
@@ -68,7 +68,7 @@ public static class IniHelper
     }
 
     /// <summary>
-    /// 写入布尔值
+    /// Write Boolean value
     /// </summary>
     public static void WriteBoolean(string section, string key, bool value, string iniPath)
     {
@@ -76,7 +76,7 @@ public static class IniHelper
     }
 
     /// <summary>
-    /// 写入整数值
+    /// Write integer value
     /// </summary>
     public static void WriteInt(string section, string key, int value, string iniPath)
     {

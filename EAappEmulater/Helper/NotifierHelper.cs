@@ -1,6 +1,6 @@
 ﻿using Notification.Wpf;
-using Notification.Wpf.Controls;
 using Notification.Wpf.Constants;
+using Notification.Wpf.Controls;
 
 namespace EAappEmulater.Helper;
 
@@ -35,7 +35,7 @@ public static class NotifierHelper
     }
 
     /// <summary>
-    /// 显示Toast通知
+    /// Display Toast notification
     /// </summary>
     private static void Show(NotificationType type, string message)
     {
@@ -47,7 +47,7 @@ public static class NotifierHelper
                 NotificationType.Information => "information",
                 NotificationType.Success => "success",
                 NotificationType.Warning => "warn",
-                NotificationType.Error => "mistake",
+                NotificationType.Error => "error",
                 NotificationType.Notification => "notify",
                 _ => "",
             };

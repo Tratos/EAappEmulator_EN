@@ -3,7 +3,7 @@
 public static class JsonHelper
 {
     /// <summary>
-    /// 反序列化配置
+    ///Deserialization configuration
     /// </summary>
     private static readonly JsonSerializerOptions OptionsDeserialize = new()
     {
@@ -13,7 +13,7 @@ public static class JsonHelper
     };
 
     /// <summary>
-    /// 序列化配置
+    /// Serialization configuration
     /// </summary>
     private static readonly JsonSerializerOptions OptionsSerialize = new()
     {
@@ -25,7 +25,7 @@ public static class JsonHelper
     };
 
     /// <summary>
-    /// 反序列化，将json字符串转换成json类
+    /// Deserialize, convert json string into json class
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="result"></param>
@@ -38,13 +38,13 @@ public static class JsonHelper
         }
         catch (Exception ex)
         {
-            LoggerHelper.Error("Deserialization exception occurred", ex);
+            LoggerHelper.Error("An exception occurred during deserialization", ex);
             return default;
         }
     }
 
     /// <summary>
-    /// 序列化，将json类转换成json字符串
+    /// Serialization, convert json class into json string
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="jsonClass"></param>

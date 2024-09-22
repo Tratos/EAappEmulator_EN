@@ -23,19 +23,30 @@ public static class LoggerHelper
             Encoding = Encoding.UTF8
         };
 
-#if DEBUG
+        //Default complete log
         config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
         config.AddRule(LogLevel.Trace, LogLevel.Fatal, new NlogViewerTarget());
-#else
-        config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
-        config.AddRule(LogLevel.Info, LogLevel.Fatal, new NlogViewerTarget());
-#endif
 
         LogManager.ThrowExceptions = false;
         LogManager.Configuration = config;
     }
 
-    #region Trace，追踪
+    /// <summary>
+    ///Set the minimum log level
+    /// </summary>
+    public static void SetLogMinLevel(LogLevel minLevel)
+    {
+        var config = LogManager.Configuration;
+
+        foreach (var item in config.LoggingRules)
+        {
+            item.SetLoggingLevels(minLevel, LogLevel.Fatal);
+        }
+
+        LogManager.ReconfigExistingLoggers();
+    }
+
+    #region Trace
     public static void Trace(string msg)
     {
         Logger.Trace(msg);
@@ -47,7 +58,7 @@ public static class LoggerHelper
     }
     #endregion
 
-    #region Debug，调试
+    #region Debug, debugging
     public static void Debug(string msg)
     {
         Logger.Debug(msg);
@@ -59,7 +70,7 @@ public static class LoggerHelper
     }
     #endregion
 
-    #region Info，信息
+    #region Info, information
     public static void Info(string msg)
     {
         Logger.Info(msg);
@@ -71,7 +82,7 @@ public static class LoggerHelper
     }
     #endregion
 
-    #region Warn，警告
+    #region Warn, warning
     public static void Warn(string msg)
     {
         Logger.Warn(msg);
@@ -83,7 +94,7 @@ public static class LoggerHelper
     }
     #endregion
 
-    #region Error，错误
+    #region Error, error
     public static void Error(string msg)
     {
         Logger.Error(msg);
@@ -95,7 +106,7 @@ public static class LoggerHelper
     }
     #endregion
 
-    #region Fatal,致命错误
+    #region Fatal,fatal error
     public static void Fatal(string msg)
     {
         Logger.Fatal(msg);

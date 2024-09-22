@@ -1,24 +1,24 @@
-﻿using EAappEmulater.Helper;
+﻿using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Helper;
 using Microsoft.Web.WebView2.Core;
-using CommunityToolkit.Mvvm.Input;
 
 namespace EAappEmulater.Windows;
 
 /// <summary>
-/// LoginWindow.xaml 的交互逻辑
+/// Interaction logic of LoginWindow.xaml
 /// </summary>
 public partial class LoginWindow
 {
-    private const string _host = "https://accounts.ea.com/connect/auth?client_id=sparta-backend-as-user-pc&response_type=code&release_type=none";
+    private const string _host = "https://accounts.ea.com/connect/auth?response_type=code&locale=en_US&client_id=EADOTCOM-WEB-SERVER";
 
     /**
      * 2024/04/29
-     * 关于 WebView2 第一次加载设置 Visibility 不可见会导致短暂白屏
+     * Regarding the first loading setting of WebView2, if the Visibility is not visible, it will cause a brief white screen.
      * https://github.com/MicrosoftEdge/WebView2Feedback/issues/3707#issuecomment-1679440957
      */
 
     /// <summary>
-    /// 是否清理缓存（用于切换新账号使用）
+    /// Whether to clear the cache (used to switch to a new account)
     /// </summary>
     private readonly bool _isClear;
 
@@ -29,23 +29,23 @@ public partial class LoginWindow
     }
 
     /// <summary>
-    /// 窗口加载完成事件
+    /// Window loading completion event
     /// </summary>
     private void Window_Login_Loaded(object sender, RoutedEventArgs e)
     {
     }
 
     /// <summary>
-    /// 窗口内容呈现完毕后事件
+    /// Event after window content is rendered
     /// </summary>
     private async void Window_Login_ContentRendered(object sender, EventArgs e)
     {
-        // 初始化WebView2
+        //Initialize WebView2
         await InitWebView2();
     }
 
     /// <summary>
-    /// 窗口关闭时事件
+    /// Event when the window is closed
     /// </summary>
     private void Window_Login_Closing(object sender, CancelEventArgs e)
     {
@@ -55,50 +55,50 @@ public partial class LoginWindow
 
         var accountWindow = new AccountWindow();
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = accountWindow;
 
-        // 显示切换账号窗口
+        //Display the switch account window
         accountWindow.Show();
     }
 
     /// <summary>
-    /// 初始化WebView2登录信息
+    /// Initialize WebView2 login information
     /// </summary>
     private async Task InitWebView2()
     {
         try
         {
-            LoggerHelper.Info("Start initialization WebView2 ...");
+            LoggerHelper.Info("Start initializing WebView2...");
 
             var options = new CoreWebView2EnvironmentOptions();
 
-            // 初始化WebView2环境
+            //Initialize WebView2 environment
             var env = await CoreWebView2Environment.CreateAsync(null, Globals.GetAccountCacheDir(), options);
             await WebView2_Main.EnsureCoreWebView2Async(env);
 
             LoggerHelper.Info("Initializing WebView2 completed...");
 
-            // 禁止Dev开发工具
+            // Disable Dev development tools
             WebView2_Main.CoreWebView2.Settings.AreDevToolsEnabled = false;
-            // 禁止右键菜单
+            // Disable right-click menu
             WebView2_Main.CoreWebView2.Settings.AreDefaultContextMenusEnabled = false;
-            // 禁止浏览器缩放
+            // Disable browser zoom
             WebView2_Main.CoreWebView2.Settings.IsZoomControlEnabled = false;
-            // 禁止显示状态栏（鼠标悬浮在链接上时右下角没有url地址显示）
+            // Disable display of the status bar (no url address is displayed in the lower right corner when the mouse is hovering over the link)
             WebView2_Main.CoreWebView2.Settings.IsStatusBarEnabled = false;
 
-            // 新窗口打开页面的处理
+            // Processing of pages opened in new windows
             WebView2_Main.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-            // Url变化的处理
+            //Handling of Url changes
             WebView2_Main.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
 
-            // 导航开始事件
+            // Navigation start event
             WebView2_Main.CoreWebView2.NavigationStarting += CoreWebView2_NavigationStarting;
-            // 导航完成事件
+            // Navigation completion event
             WebView2_Main.CoreWebView2.NavigationCompleted += CoreWebView2_NavigationCompleted;
 
-            // 用于更换新账号
+            // Used to change new account
             if (_isClear)
             {
                 LoggerHelper.Info("Start clearing the cache of the current login account...");
@@ -108,7 +108,7 @@ public partial class LoginWindow
             {
                 LoggerHelper.Info("Starting to load the WebView2 login interface...");
 
-                // 导航到指定Url
+                // Navigate to the specified Url
                 WebView2_Main.CoreWebView2.Navigate(_host);
             }
         }
@@ -131,7 +131,7 @@ public partial class LoginWindow
 
         var source = WebView2_Main.Source.ToString();
         LoggerHelper.Info($"Current WebView2 address: {source}");
-        if (!source.Contains("127.0.0.1/success?code="))
+        if (!source.Contains("test.pulse.ea.com"))
             return;
 
         LoggerHelper.Info("The player logged in successfully and started to obtain cookies...");
@@ -190,7 +190,7 @@ public partial class LoginWindow
     }
 
     /// <summary>
-    /// 清空WebView2缓存
+    /// Clear WebView2 cache
     /// </summary>
     /// <returns></returns>
     private async Task ClearWebView2Cache()
@@ -203,7 +203,7 @@ public partial class LoginWindow
     }
 
     /// <summary>
-    /// 重新加载登录页面
+    /// Reload the login page
     /// </summary>
     [RelayCommand]
     private void ReloadLoginPage()

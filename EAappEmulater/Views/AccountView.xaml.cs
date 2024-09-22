@@ -1,13 +1,13 @@
-﻿using EAappEmulater.Core;
+﻿using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using EAappEmulater.Core;
 using EAappEmulater.Models;
 using EAappEmulater.Windows;
-using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// AccountView.xaml 的交互逻辑
+/// Interaction logic of AccountView.xaml
 /// </summary>
 public partial class AccountView : UserControl
 {
@@ -24,11 +24,11 @@ public partial class AccountView : UserControl
     {
         AccountModel.AvatarId = Account.AvatarId;
 
-        // 玩家头像为空处理（仅有数据账号）
+        // The player avatar is empty (only data account)
         if (!string.IsNullOrWhiteSpace(Account.Remid) && string.IsNullOrWhiteSpace(Account.Avatar))
             AccountModel.Avatar = "Default";
 
-        // 验证玩家头像与玩家头像Id是否一致
+        // Verify whether the player avatar is consistent with the player avatar ID
         if (!Account.Avatar.Contains(Account.AvatarId))
             AccountModel.Avatar = "Default";
 
@@ -50,21 +50,21 @@ public partial class AccountView : UserControl
     }
 
     /// <summary>
-    /// 更换账号
+    /// Change account
     /// </summary>
     [RelayCommand]
     private void SwitchAccount()
     {
         var accountWindow = new AccountWindow();
 
-        // 转移主程序控制权
+        //Transfer control of main program
         Application.Current.MainWindow = accountWindow;
-        // 设置关闭标志
+        //Set the close flag
         MainWindow.IsCodeClose = true;
-        // 关闭主窗口
+        // Close the main window
         MainWindow.MainWinInstance.Close();
 
-        // 显示更换账号窗口
+        //Display the change account window
         accountWindow.Show();
     }
 }

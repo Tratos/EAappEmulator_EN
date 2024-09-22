@@ -6,7 +6,7 @@ namespace EAappEmulater.Utils;
 
 public static class CoreUtil
 {
-    #region 配置目录
+    #region configuration directory
     public static string Dir_MyDocuments { get; private set; }
     public static string Dir_Default { get; private set; }
 
@@ -39,14 +39,14 @@ public static class CoreUtil
 
     static CoreUtil()
     {
-        #region 配置目录
+        #region configuration directory
         Dir_MyDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         Dir_Default = Path.Combine(Dir_MyDocuments, "EAappEmulater");
 
         Dir_Cache = Path.Combine(Dir_Default, "Cache");
         Dir_Config = Path.Combine(Dir_Default, "Config");
         Dir_Account = Path.Combine(Dir_Default, "Account");
-        Dir_Avatar = Path.Combine(Dir_Default, "Avatar");
+        Dir_Avatar = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Origin", "AvatarsCache");
         Dir_Service = Path.Combine(Dir_Default, "Service");
         Dir_Log = Path.Combine(Dir_Default, "Log");
 
@@ -69,7 +69,7 @@ public static class CoreUtil
         File_Service_OriginDebug = Path.Combine(Dir_Service, "OriginDebug.exe");
         #endregion
 
-        // 批量创建账号槽缓存目录
+        // Create account slot cache directories in batches
         foreach (int value in Enum.GetValues(typeof(AccountSlot)))
         {
             var path = Path.Combine(Dir_Cache, $"Account{value}");
@@ -91,38 +91,38 @@ public static class CoreUtil
     }
 
     /// <summary>
-    /// 关闭服务进程
+    /// Close the service process
     /// </summary>
-    public static async Task CloseServiceProcess()
+    public static void CloseServiceProcess()
     {
         LoggerHelper.Info("Prepare to shut down the service process");
-        await ProcessHelper.CloseProcess("EADesktop");
-        await ProcessHelper.CloseProcess("OriginDebug");
-        await ProcessHelper.CloseProcess("Origin");
+        ProcessHelper.CloseProcess("EADesktop");
+        ProcessHelper.CloseProcess("OriginDebug");
+        ProcessHelper.CloseProcess("Origin");
 
-        await ProcessHelper.CloseProcess("BF1ModTools");
+        ProcessHelper.CloseProcess("BF1ModTools");
     }
 
     /// <summary>
-    /// 检查WebView2依赖
+    /// Check WebView2 dependency
     /// </summary>
     public static bool CheckWebView2Env()
     {
         try
         {
             var version = CoreWebView2Environment.GetAvailableBrowserVersionString();
-            LoggerHelper.Info($"WebView2 Runtime Version Information {version}");
+            LoggerHelper.Info($"WebView2 Runtime version information {version}");
             return !string.IsNullOrWhiteSpace(version);
         }
         catch (Exception ex)
         {
-            LoggerHelper.Error("WebView2 Runtime Abnormal environment", ex);
+            LoggerHelper.Error("WebView2 Runtime environment exception", ex);
             return false;
         }
     }
 
     /// <summary>
-    /// 判断是否管理员权限运行
+    /// Determine whether to run with administrator privileges
     /// </summary>
     public static bool IsRunAsAdmin()
     {
@@ -132,7 +132,7 @@ public static class CoreUtil
     }
 
     /// <summary>
-    /// 时间戳转本地时间
+    /// Convert timestamp to local time
     /// </summary>
     public static DateTime TimestampToDataTime(long timeStamp)
     {
@@ -140,7 +140,7 @@ public static class CoreUtil
     }
 
     /// <summary>
-    /// 时间戳转本地时间字符串
+    /// Convert timestamp to local time string
     /// </summary>
     public static string TimestampToDataTimeString(long timeStamp)
     {
@@ -149,7 +149,7 @@ public static class CoreUtil
     }
 
     /// <summary>
-    /// 返回时间戳相差天数
+    /// Returns the number of days between timestamps
     /// </summary>
     /// <param name="timeStamp"></param>
     /// <returns></returns>

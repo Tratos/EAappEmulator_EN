@@ -5,7 +5,7 @@ namespace EAappEmulater.Helper;
 public static class RegistryHelper
 {
     /// <summary>
-    /// 读取注册表
+    /// Read the registry
     /// </summary>
     public static string GetRegistryTargetVaule(string regPath, string keyName)
     {
@@ -27,7 +27,7 @@ public static class RegistryHelper
     }
 
     /// <summary>
-    /// 写入注册表
+    /// Write to the registry
     /// </summary>
     public static void SetRegistryTargetVaule(string regPath, string keyName, string value)
     {
@@ -35,7 +35,7 @@ public static class RegistryHelper
         {
             var localMachine = Registry.LocalMachine;
 
-            // 创建注册表，如果已经存在则不影响
+            //Create the registry, if it already exists it will not be affected
             using var regKey = localMachine.CreateSubKey(regPath, true);
             if (regKey is null)
                 return;
@@ -49,7 +49,7 @@ public static class RegistryHelper
     }
 
     /// <summary>
-    /// 读取注册表EA游戏安装目录
+    /// Read the registry EA game installation directory
     /// </summary>
     public static string GetRegistryInstallDir(string regPath)
     {
@@ -61,7 +61,7 @@ public static class RegistryHelper
     }
 
     /// <summary>
-    /// 读取注册表EA游戏语言信息
+    /// Read the registry EA game language information
     /// </summary>
     /// <param name="regPath"></param>
     /// <returns></returns>
@@ -75,7 +75,7 @@ public static class RegistryHelper
     }
 
     /// <summary>
-    /// 获取当前游戏安装语言
+    /// Get the current game installation language
     /// </summary>
     public static string GetLocaleByContentId(string contentId)
     {
@@ -93,23 +93,29 @@ public static class RegistryHelper
     }
 
     /// <summary>
-    /// 获取Origin/EA App注册表情况，如果不存在就写入一个，这样做可以在不安装平台的情况启动游戏
+    /// Get the Origin/EA App registry status and write it directly every time it is started
     /// </summary>
     public static void CheckAndAddEaAppRegistryKey()
     {
+                /*
+                 * This can solve the problem that games such as F1 23 cannot be started if they do not install EA Desktop/Origin and there is no program in the registry ClientPath path.
+                 * It can also solve the problem of EA App popping up when starting games such as TTF2
+                 */
+
         try
         {
-            using RegistryKey localMachine = Registry.LocalMachine;
-            using RegistryKey subKey = localMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Origin", true);
-            if (subKey != null)
-                return;
+            using var localMachine = Registry.LocalMachine;
+            using var newSubKey = localMachine.CreateSubKey(@"SOFTWARE\Wow6432Node\Origin", true);
 
-            using RegistryKey newSubKey = localMachine.CreateSubKey(@"SOFTWARE\Wow6432Node\Origin");
-            newSubKey?.SetValue("ClientPath", @"C:\Program Files\Electronic Arts\EA Desktop\EA Desktop\EADesktop.exe", RegistryValueKind.String);
+            if (newSubKey is not null)
+            {
+                var clientPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmdkey.exe");
+                newSubKey.SetValue("ClientPath", clientPath, RegistryValueKind.String);
+            }
         }
         catch (Exception ex)
         {
-            LoggerHelper.Error($"Exception when writing EADesktop installation path to registry", ex);
+            LoggerHelper.Error("Exception when writing EADesktop installation path to registry", ex);
         }
     }
 }

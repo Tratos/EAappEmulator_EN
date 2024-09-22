@@ -30,8 +30,8 @@
                     VerticalAlignment="Center"
                     Icon="&#xE896;"
                     Text="Found a new version, click to download"
-                    ToolTip="https://battlefield.vip"
-                    Uri="https://battlefield.vip"
+                    ToolTip="https://github.com/CrazyZhang666/EAappEmulater/releases"
+                    Uri="https://github.com/CrazyZhang666/EAappEmulater/releases"
                     Visibility="Hidden"
                     WindowChrome.IsHitTestVisibleInChrome="True" />
                 <!--  //////////////  -->
@@ -83,13 +83,18 @@
             <Separator />
             <MenuItem
                 Command="{Binding ExitAppCommand}"
-                Header="exit the program"
+                Header="Exit program"
                 Icon="&#xE711;" />
         </ContextMenu>
     </ui:Window.Resources>
 
     <Grid>
-        <!--  托盘菜单  -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="29*"/>
+            <ColumnDefinition Width="96*"/>
+            <ColumnDefinition Width="875*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Tray menu -->
         <tb:TaskbarIcon
             x:Name="NotifyIcon_Main"
             ContextMenu="{StaticResource ContextMenu_Notify}"
@@ -98,16 +103,16 @@
             MenuActivation="RightClick"
             NoLeftClickDelay="True"
             PopupActivation="DoubleClick"
-            ToolTipText="EA app emulator" />
+            ToolTipText="EA app emulator" Grid.ColumnSpan="3" />
 
-        <!--  主区域  -->
-        <Grid>
+        <!-- Main area -->
+        <Grid Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <!--  左侧导航栏  -->
+            <!-- Left navigation bar -->
             <Border Background="#FAFAFA">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Bottom">
@@ -116,7 +121,7 @@
                             CommandParameter="AccountView"
                             GroupName="NavMenu"
                             Icon="&#xE77B;"
-                            ToolTip="Account" Cursor="Hand" />
+                            ToolTip="Account" />
                         <ui:NavMenu
                             Command="{Binding NavigateCommand}"
                             CommandParameter="SettingView"
@@ -167,7 +172,7 @@
                 </DockPanel>
             </Border>
 
-            <!--  导航内容区域  -->
+            <!-- Navigation content area -->
             <Border
                 Grid.Column="1"
                 BorderBrush="#E5E5E5"
@@ -178,12 +183,12 @@
 
         </Grid>
 
-        <!--  通知区域  -->
+        <!-- Notification area -->
         <ntf:NotificationArea
             x:Name="MainWindowArea"
             d:Visibility="Hidden"
             MaxItems="3"
-            Position="BottomCenter" />
+            Position="BottomCenter" Grid.ColumnSpan="3" />
 
     </Grid>
 

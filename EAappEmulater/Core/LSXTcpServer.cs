@@ -14,18 +14,18 @@ public static class LSXTcpServer
 
     static LSXTcpServer()
     {
-        // 加载XML字符串
+        //Load XML string
         for (int i = 0; i <= 25; i++)
         {
             var text = FileHelper.GetEmbeddedResourceText($"LSX.BFV.{i:D2}.xml");
 
-            // 头像 \AppData\Local\Origin\AvatarsCache（不清楚为啥不显示）
-            text = text.Replace("##AvatarId##", "Avatars40.jpg");
+            // Avatar \AppData\Local\Origin\AvatarsCache (not sure why it is not displayed)
+            text = text.Replace("##AvatarId##", Account.Avatar);
 
             ScoketMsgBFV.Add(text);
         }
 
-        // 这里结束符必须要加
+        // The terminator must be added here
         ScoketMsgBFV[0] = string.Concat(ScoketMsgBFV[0], "\0");
         ScoketMsgBFV[1] = string.Concat(ScoketMsgBFV[1], "\0");
 
@@ -37,7 +37,7 @@ public static class LSXTcpServer
             ScoketMsgBFH.Add(text);
         }
 
-        // 这里结束符必须要加
+        // The terminator must be added here
         ScoketMsgBFH[0] = string.Concat(ScoketMsgBFH[0], "\0");
         ScoketMsgBFH[1] = string.Concat(ScoketMsgBFH[1], "\0");
 
@@ -51,7 +51,7 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 启动 TCP 监听服务
+    /// Start TCP listening service
     /// </summary>
     public static void Run()
     {
@@ -71,7 +71,7 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 停止 TCP 监听服务
+    /// Stop TCP listening service
     /// </summary>
     public static void Stop()
     {
@@ -81,7 +81,7 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 获取玩家列表Xml字符串
+    /// Get the player list Xml string
     /// </summary>
     private static string GetFriendsXmlString()
     {
@@ -90,27 +90,37 @@ public static class LSXTcpServer
 
         return ScoketMsgBFV[11];
     }
+    /// <summary>
+    /// Get friends list xml
+    /// </summary>
+    private static string QueryPresenceResponse()
+    {
+        if (Globals.IsGetFriendsSuccess)
+            return Globals.QueryPresenceString;
+
+        return ScoketMsgBFV[13];
+    }
 
     /// <summary>
-    /// 处理TCP客户端连接
+    /// Handle TCP client connection
     /// </summary>
     private static async void Result(IAsyncResult asyncResult)
     {
-        // 避免服务关闭时抛出异常
+        // Avoid throwing exceptions when the service is shut down
         if (_tcpServer is null)
             return;
 
-        // 完成检索传入的客户端请求的异步操作
+        // Complete the asynchronous operation that retrieves the incoming client request
         var client = _tcpServer.EndAcceptTcpClient(asyncResult);
-        // 开始异步检索传入的请求（下一个请求）
+        // Start asynchronous retrieval of incoming request (next request)
         _tcpServer.BeginAcceptTcpClient(Result, null);
 
-        // 保存客户端连接Ip和地址
+        //Save the client connection IP and address
         var clientIp = string.Empty;
 
         try
         {
-            // 如果连接断开，则结束
+            //If the connection is disconnected, end
             if (!client.Connected)
                 return;
 
@@ -119,22 +129,22 @@ public static class LSXTcpServer
 
             /////////////////////////////////////////////////
 
-            // 建立和连接的客户端的数据流（传输数据）
+            // Establish and connect the client's data stream (transmit data)
             var networkStream = client.GetStream();
-            // 设置读写超时时间为 3600 秒
+            //Set the read and write timeout to 3600 seconds
             networkStream.ReadTimeout = 3600000;
             networkStream.WriteTimeout = 3600000;
 
             var startKey = "cacf897a20b6d612ad0c05e011df52bb";
             var buffer = Encoding.UTF8.GetBytes(ScoketMsgBFV[0].Replace("##KEY##", startKey));
 
-            // 异步写入网络流
+            //Asynchronously write to network stream
             await networkStream.WriteAsync(buffer);
 
             var tcpString = await ReadTcpString(client, networkStream);
             var partArray = tcpString.Split('\"');
 
-            // 适配FC24
+            // Adapt to FC24
             var doc = XDocument.Parse(tcpString.Replace("version=\"\"", "version1=\"\""));
             var request = doc.Element("LSX").Element("Request");
             var contentId = request.Element("ChallengeResponse").Element("ContentId").Value;
@@ -144,8 +154,8 @@ public static class LSXTcpServer
 
             LoggerHelper.Debug($"Current BattlelogType {BattlelogHttpServer.BattlelogType}");
 
-            // 处理 Battlelog 游戏（default代表是其他游戏）
-            // 硬仗和 bf4debug 模式的 lsx 请求不一样
+            // Process the Battlelog game (default represents other games)
+            // Battlefield Hardline is different from the lsx request in bf4debug mode
             switch (BattlelogHttpServer.BattlelogType)
             {
                 case BattlelogType.BFH:
@@ -164,28 +174,28 @@ public static class LSXTcpServer
             LoggerHelper.Info($"The ContentId of this startup is {contentId}");
             LoggerHelper.Info("Getting ready to start the game...");
 
-            // 检查 Challenge 响应
+            // Check Challenge response
             if (!EaCrypto.CheckChallengeResponse(response, startKey))
             {
                 LoggerHelper.Fatal("Challenge Response Fatal error!");
                 return;
             }
 
-            // 处理解密 Challenge 响应
+            // Handle decryption Challenge response
             var newResponse = EaCrypto.MakeChallengeResponse(key);
-            LoggerHelper.Debug($"Handle decryption Challenge response NewResponse {newResponse}");
+            LoggerHelper.Debug($"The Challenge Response for this startup is {newResponse}");
 
             var seed = (ushort)((newResponse[0] << 8) | newResponse[1]);
             LoggerHelper.Debug($"Processing Decryption Challenge Response Seed {newResponse}");
 
-            // 处理请求
+            // handle the request
             buffer = Encoding.UTF8.GetBytes(ScoketMsgBFH[1].Replace("##RESPONSE##", newResponse).Replace("##ID##", partArray[3]));
 
-            // 异步写入网络流
+            //Asynchronously write to network stream
             await networkStream.WriteAsync(buffer);
 
-            // 这里死循环要注意
-            // 仅客户端已连接时运行
+            // Pay attention to the infinite loop here
+            // Only run when client is connected
             while (client.Connected)
             {
                 try
@@ -236,31 +246,31 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 异步读取 TCP 网络流字符串
+    /// Asynchronously read TCP network stream string
     /// </summary>
     private static async Task<string> ReadTcpString(TcpClient client, NetworkStream stream)
     {
-        // 如果客户端连接断开，则返回空字符串
+        // If the client connection is disconnected, return an empty string
         if (!client.Connected)
             return string.Empty;
 
-        /**
-         * 以异步的方式模拟 NetworkStream.ReadByte()
-         * 为了修复傻逼重生家游戏只能这样干，重生你妈死了
-         */
+                /**
+                 * Simulate NetworkStream.ReadByte() asynchronously
+                 * This is the only way to fix the stupid rebirth game, rebirth your mother is dead
+                 */
 
         var strBuilder = new StringBuilder();
-        var buffer = new byte[1];       // 单字节缓冲区
-        int readLength;                 // 实际读取的长度
+        var buffer = new byte[1];       // single byte buffer
+        int readLength;                 // actual read length
 
         try
         {
-            // 读取长度大于0时才执行
-            // 当游戏关闭时，这个会发生异常（远程主机强迫关闭了一个现有的连接）
+            // Execute only when the read length is greater than 0
+            // This exception will occur when the game is closed (the remote host forcibly closed an existing connection)
             while ((readLength = await stream.ReadAsync(buffer)) > 0)
             {
                 var b = buffer[0];
-                if (b == 0)             // 结束符
+                if (b == 0)             // terminator
                     break;
 
                 strBuilder.Append((char)b);
@@ -268,7 +278,7 @@ public static class LSXTcpServer
         }
         catch (Exception ex)
         {
-            // 异常处理
+            //Exception handling
             LoggerHelper.Error("Exception while reading TCP string asynchronously", ex);
         }
 
@@ -276,22 +286,22 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 异步写入 TCP 网络流字符串
+    /// Asynchronously write TCP network stream string
     /// </summary>
     private static async Task WriteTcpString(TcpClient client, NetworkStream stream, string tcpStr)
     {
-        // 如果客户端连接断开，则结束
+        //If the client connection is disconnected, end
         if (!client.Connected)
             return;
 
-        // 这个不要用 try catch 捕获异常
-        // 主要是为了避免死循环无限执行（使用异常来中断死循环）
+        //Do not use try catch to catch exceptions
+        // Mainly to avoid infinite execution of the infinite loop (use exceptions to interrupt the infinite loop)
         var buffer = Encoding.UTF8.GetBytes(tcpStr);
         await stream.WriteAsync(buffer);
     }
 
     /// <summary>
-    /// 处理 BFV LSX 请求
+    /// Handle BFV LSX requests
     /// </summary>
     private static async Task<string> LSXRequestHandleForBFV(string request, string contentId)
     {
@@ -334,8 +344,8 @@ public static class LSXTcpServer
                 _ => string.Empty,
             },
             "><QueryFriends UserId=" => GetFriendsXmlString().Replace("##ID##", id),
-            "><QueryImage ImageId=" => ScoketMsgBFV[12].Replace("##ID##", id).Replace("##ImageId##", partArray[5]).Replace("##Width##", partArray[7]),
-            "><QueryPresence UserId=" => ScoketMsgBFV[13].Replace("##ID##", id),
+            "><QueryImage ImageId=" => await EasyEaApi.GetQueryImageXml(id, partArray[5].Replace("user:", ""), partArray[7], partArray[5]),
+            "><QueryPresence UserId=" => QueryPresenceResponse().Replace("##ID##", id).Replace("##UID##", Account.UserId),
             "><SetPresence UserId=" => ScoketMsgBFV[14].Replace("##ID##", id),
             "><GetAllGameInfo version=" => contentId switch
             {
@@ -357,7 +367,7 @@ public static class LSXTcpServer
     }
 
     /// <summary>
-    /// 处理 BFH LSX 请求
+    /// Handle BFH LSX requests
     /// </summary>
     /// <param name="request"></param>
     /// <returns></returns>
@@ -366,16 +376,16 @@ public static class LSXTcpServer
         if (string.IsNullOrWhiteSpace(request))
             return string.Empty;
 
-        LoggerHelper.Debug($"BFH LSX Request {request}");
+        LoggerHelper.Debug($"BFH LSX 请求 Request {request}");
 
         var partArray = request.Split('\"');
-        LoggerHelper.Debug($"BFH LSX request partArray length {partArray.Length}");
+        LoggerHelper.Debug($"BFH LSX 请求 partArray 长度 {partArray.Length}");
 
         var id = partArray[3];
         var requestType = partArray[4];
 
-        LoggerHelper.Debug($"BFH LSX Request ID {id}");
-        LoggerHelper.Debug($"BFH LSX request RequestType {requestType}");
+        LoggerHelper.Debug($"BFH LSX 请求 Id {id}");
+        LoggerHelper.Debug($"BFH LSX 请求 RequestType {requestType}");
 
         return requestType switch
         {

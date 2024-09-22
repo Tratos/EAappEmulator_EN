@@ -1,90 +1,124 @@
-﻿2024/07/18  v1.6.0.0
+﻿2024/08/30  v1.7.2.0
 ------------------------
-- Open sourced the EAapp simulator source code
+- 增加更加详细的日志输出，方便排查问题
+- 优化部分UI使用体验
+
+
+2024/08/07  v1.7.1.0
+------------------------
+- 修复部分玩家点击游戏库会导致软件崩溃的bug
+- 优化使用体验
+
+
+2024/08/02  v1.7.0.0
+------------------------
+【Bug修复】
+- 修复游戏内好友以及自己头像不显示
+- 修复部分EA游戏不安装平台无法启动（比如F1 23）
+- 修复部分EA游戏启动会弹出平台（比如泰坦陨落2）
+- 将登录界面修改为包含第三方登录的完整版
+【新添加以下游戏支持】
+- 极品飞车：宿敌（无法联网）
+- 圣歌
+- PGA Tour
+- EA SPORTS™ F1® 24（未经测试，试玩版许可证无法启动）
+- 星球大战 绝地-陨落的武士团™
+- 星球大战™ 战机中队
+- 荣誉勋章：铁血悍将
+
+
+2024/07/20  v1.6.1.0
+------------------------
+- 修改软件内超链接指向GitHub
+
+
+2024/07/18  v1.6.0.0
+------------------------
+- 开源了EAapp模拟器源代码
 
 
 2024/06/24  v1.5.9.0
 ------------------------
-- Added detection of TCP port occupation when starting the program
-- Upgrade dependent library version
+- 增加启动程序时对TCP端口占用的检测
+- 升级依赖库版本
 
 
 2024/06/12  v1.5.8.0
 ------------------------
-- Fixed the problem that the game cannot be started without EaApp installed
-- Fix known bugs
+- 修复未安装EaApp无法启动游戏问题
+- 修复已知bug
 
 
 2024/05/31  v1.5.7.0
 ------------------------
-- The number of account slots has been increased from 10 to 100
-- Upgrade dependent library version
+- 账号槽数量由10个增加到100个
+- 升级依赖库版本
 
 
 2024/05/04  v1.5.6.0
 ------------------------
-- Fixed the problem that the battlelog web page status cannot obtain the game status
+- 修复battlelog网页状态无法获取游戏状态的问题
 
 
 2024/05/01  v1.5.5.0
 ------------------------
-- Fixed an issue that caused crashes for some players when getting their friends list
+- 修复部分玩家获取好友列表会导致崩溃的问题
 
 
 2024/05/01  v1.5.4.0
 ------------------------
-- Added the function of minimizing to the system tray to prevent accidental touch
-- Modify the color scheme of the theme program to imitate Win11 style
-- Optimize user experience and polish details
+- 增加最小化到系统托盘功能，防止误触
+- 修改主题程序配色，仿Win11风格
+- 优化用户使用体验，打磨细节
 
 
 2024/04/30  v1.5.3.0
 ------------------------
-- Perhaps fixed the issue of incorrect display of user ID on Star Wars: Battlefront 2 scoreboard
-- Perhaps the problem of being unable to connect to the private server of Titanfall 2 Polaris has been fixed.
-- Fixed the problem of FIFA22 FIFA23 FC24 showing that the game version needs to be updated, resulting in the inability to connect to the Internet
-- Fix other known bugs
+- 或许修复了星球大战：战场前线2计分板用户id显示不正确的问题
+- 或许修复了泰坦陨落2北极星私服无法连接的问题
+- 修复FIFA22 FIFA23 FC24显示游戏版本需要更新导致无法联网的问题
+- 修复其他已知bug
 
 
 2024/04/29  v1.5.2.0
 ------------------------
-- Improved detection and update reminder methods
-- Improved game advanced settings dialog box style
-- Optimize program structure
+- 改进检测更新提醒方式
+- 改进游戏高级设置对话框样式
+- 优化程序结构
 
 
 2024/04/29  v1.5.1.0
 ------------------------
-- Fixed the problem of repeated prompts in the pop-up window for canceling updates
-- Fixed the problem of white screen when WebView2 is loaded for the first time
-- Fixed the issue of old data not being cleared when changing accounts
-- Update third-party library dependencies
+- 修复取消更新弹窗重复提示问题
+- 修复WebView2首次加载白屏问题
+- 修复更换账号未清空旧数据问题
+- 更新第三方库依赖
 
 
 2024/04/29  v1.5.0.0
 ------------------------
-- Added new game support:
-    Plants vs. Zombies: Garden Warfare 1
-    Plants vs. Zombies: Battle for Harmony Town
-    Star Wars: Battlefront 1
-    Need for Speed: Heat
-    Need for Speed ​​19
-    Two people in a row (cannot play online multiplayer because origin is not available in the game)
+- 添加新游戏支持：
+    植物大战僵尸：花园战争1
+    植物大战僵尸：和睦小镇保卫战
+    星球大战：战场前线1
+    极品飞车：热度
+    极品飞车19
+    双人成行(无法在线多人游戏，因为游戏内origin无法使用)
     FIFA 22
-- Fixed an issue in Titanfall 2 that caused Origin to be offline and unable to enter multiplayer mode (compatible with Polaris private server)
-- Fixed the issue where Titanfall 2 can only be used in English
-- Fixed an issue where Titanfall 2 could not connect to the data center
-- Fixed the problem that FIFA23 FC24 cannot switch to the currently installed language during startup
+- 修复泰坦陨落2显示Origin目前离线导致无法进入多人模式的问题（兼容北极星私服）
+- 修复泰坦陨落2只能使用英文的问题
+- 修复泰坦陨落2无法连接数据中心的问题
+- 修复FIFA23 FC24启动无法切换到目前已安装语言的问题
 
 
 2024/04/29  v1.4.4.0
 ------------------------
-- Optimize the multi-account switching function, players can freely choose the account to log in when starting
-- Support filling in cookie login at startup
-- Fix known bugs
+- 优化多账号切换功能，玩家启动时可自由选择要登录账号
+- 支持启动时填写Cookie登录
+- 修复已知bug
 
 
 2024/04/24  v1.4.3.0
 ------------------------
-- Fixed the issue of repeated login caused by verification cookie validity timeout
-- Fixed the problem that the friend list was not updated correctly when switching accounts
+- 修复验证Cookie有效性超时导致的反复登录问题
+- 修复切换账号时好友列表未正确更新问题

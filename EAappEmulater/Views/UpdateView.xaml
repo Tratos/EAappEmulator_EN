@@ -10,6 +10,6 @@
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
     mc:Ignorable="d">
 
-    <ui:TextBoxHint x:Name="TextBoxHint_UpdateNotes" Style="{StaticResource TextBoxHintStyle_Logger}" Hint="Please enter text" />
+    <ui:TextBoxHint x:Name="TextBoxHint_UpdateNotes" Style="{StaticResource TextBoxHintStyle_Logger}" Hint="Update" />
 
 </UserControl>

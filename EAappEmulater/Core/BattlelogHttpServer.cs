@@ -35,13 +35,13 @@ public static class BattlelogHttpServer
     }
 
     /// <summary>
-    /// 启动 Battlelog 监听服务
+    /// Start the Battlelog listening service
     /// </summary>
     public static void Run()
     {
         if (_httpListener is not null)
         {
-            LoggerHelper.Warn("Battlelog The listening service is already running, please do not start it again.");
+            LoggerHelper.Warn("The Battlelog listening service is already running, please do not start it again.");
             return;
         }
 
@@ -67,7 +67,7 @@ public static class BattlelogHttpServer
     }
 
     /// <summary>
-    /// 停止 Battlelog 监听服务
+    /// Stop the Battlelog listening service
     /// </summary>
     public static void Stop()
     {
@@ -88,7 +88,7 @@ public static class BattlelogHttpServer
     }
 
     /// <summary>
-    /// 通用响应输出流写入
+    /// Universal response output stream writing
     /// </summary>
     private static void WriteOutputStream(HttpListenerContext context, int code, bool isNeedHeader, string text)
     {
@@ -104,28 +104,28 @@ public static class BattlelogHttpServer
     }
 
     /// <summary>
-    /// 处理传入的请求
+    /// Handle incoming requests
     /// </summary>
     private static void Result(IAsyncResult asyncResult)
     {
         try
         {
-            // 避免关闭时抛出异常
+            // Avoid throwing exceptions when closing
             if (_httpListener is null)
                 return;
 
-            // 完成检索传入的客户端请求的异步操作
+            // Complete the asynchronous operation that retrieves the incoming client request
             var context = _httpListener.EndGetContext(asyncResult);
-            // 开始异步检索传入的请求（下一个请求）
+            // Start asynchronous retrieval of incoming request (next request)
             _httpListener.BeginGetContext(Result, null);
 
-            // 处理 GET 请求
+            // Handle GET request
             if (context.Request.HttpMethod == "GET")
             {
                 if (context.Request.RawUrl != "/")
                     LoggerHelper.Debug($"Battlelog handles GET request URL {context.Request.Url}");
 
-                // 处理 4219 端口请求
+                // Handle 4219 port request
                 if (context.Request.UserHostName == "127.0.0.1:4219")
                 {
                     if (context.Request.RawUrl == "/killgame")
@@ -140,12 +140,12 @@ public static class BattlelogHttpServer
                                 {
                                     if (_bf3PipeServer.GameState == null)
                                     {
-                                        // Pipe 管道服务 无游戏状态
+                                        // Pipe pipeline service no game state
                                         WriteOutputStream(context, 502, false, "null");
                                     }
                                     else if (_bf3PipeServer.GameState != null && ProcessHelper.IsAppRun("bf3") || ProcessHelper.IsAppRun("bf3debug"))
                                     {
-                                        // Pipe 管道服务 有游戏状态，bf3.exe 或 bf3debug.exe 已运行
+                                        // Pipe pipeline service has game status, bf3.exe or bf3debug.exe is running
                                         var newState = _bf3PipeServer.GameState.Replace(" : S", "\tS").Replace(" ", "\t").Replace(":\tERR", "\tERR");
                                         WriteOutputStream(context, 200, true, $"VENICE-GAME\t{newState}");
 
@@ -153,7 +153,7 @@ public static class BattlelogHttpServer
                                     }
                                     else if (!ProcessHelper.IsAppRun("bf3") || !ProcessHelper.IsAppRun("bf3debug") && _isBf3BattlelogGameStart == true)
                                     {
-                                        // bf3.exe 或 bf3debug.exe 未运行，Battlelog Game 已启动
+                                        // bf3.exe or bf3debug.exe is not running, Battlelog Game has started
                                         WriteOutputStream(context, 200, true, "VENICE-GAME\tStateChanged\tGAMEISGONE");
 
                                         BattlelogType = BattlelogType.None;
@@ -238,7 +238,7 @@ public static class BattlelogHttpServer
                             WriteOutputStream(context, 200, true, _gameStatus["76889"]);
                             break;
                         case "/game/status?masterTitleId=182288":
-                            LoggerHelper.Info("Battlelog Get Battlefield installation status");
+                            LoggerHelper.Info("Battlelog Gets Battlefield installation status");
                             WriteOutputStream(context, 200, true, _gameStatus["182288"]);
                             break;
                         default:
@@ -248,11 +248,11 @@ public static class BattlelogHttpServer
                     }
                 }
 
-                // 避免if-else嵌套过多
+                // Avoid too much nesting of if-else
                 return;
             }
 
-            // 处理 POST 请求
+            // Handle POST request
             if (context.Request.HttpMethod == "POST")
             {
                 if (context.Request.RawUrl != "/")

@@ -3,7 +3,7 @@
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// UpdateView.xaml 的交互逻辑
+/// Interaction logic of UpdateView.xaml
 /// </summary>
 public partial class UpdateView : UserControl
 {

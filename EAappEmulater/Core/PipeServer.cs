@@ -40,7 +40,7 @@ public class PipeServer
     }
 
     /// <summary>
-    /// 销毁 Pipe 监听服务
+    /// Destroy the Pipe listening service
     /// </summary>
     public void Dispose()
     {
@@ -52,7 +52,7 @@ public class PipeServer
     }
 
     /// <summary>
-    /// Pipe管道处理线程
+    /// Pipe pipeline processing thread
     /// </summary>
     private async void PipeHandlerThread()
     {
@@ -65,10 +65,10 @@ public class PipeServer
             {
                 try
                 {
-                    // 等待连接到服务器
+                    // Waiting to connect to the server
                     if (!_pipeClient.IsConnected)
                     {
-                        // 超时时长 3600 秒
+                        // Timeout duration 3600 seconds
                         await _pipeClient.ConnectAsync(3600000);
                     }
                 }
@@ -78,7 +78,7 @@ public class PipeServer
                     continue;
                 }
 
-                // 处理已连接 PipeStream 对象
+                // Process the connected PipeStream object
                 while (binaryReader.Read(array, 0, array.Length) != 0)
                 {
                     var stringBuilder = new StringBuilder();

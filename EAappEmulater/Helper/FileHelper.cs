@@ -3,7 +3,7 @@
 public static class FileHelper
 {
     /// <summary>
-    /// 创建文件夹
+    /// Create folder
     /// </summary>
     public static void CreateDirectory(string dirPath)
     {
@@ -12,7 +12,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 创建文件
+    /// Create file
     /// </summary>
     public static void CreateFile(string filePath)
     {
@@ -21,7 +21,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 创建文件
+    /// Create file
     /// </summary>
     public static void CreateFile(string dirPath, string fileName)
     {
@@ -32,7 +32,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 获取嵌入资源流（自动添加前缀）
+    /// Get the embedded resource stream (automatically add prefix)
     /// </summary>
     public static Stream GetEmbeddedResourceStream(string resPath)
     {
@@ -41,7 +41,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 获取嵌入资源文本内容
+    /// Get the text content of the embedded resource
     /// </summary>
     public static string GetEmbeddedResourceText(string resPath)
     {
@@ -53,7 +53,7 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 清空指定文件夹下的文件及文件夹
+    /// Clear the files and folders in the specified folder
     /// </summary>
     public static void ClearDirectory(string dirPath)
     {
@@ -84,11 +84,11 @@ public static class FileHelper
     }
 
     /// <summary>
-    /// 从资源文件中抽取资源文件（默认覆盖源文件）
+    /// Extract resource files from resource files (overwrite source files by default)
     /// </summary>
     public static void ExtractResFile(string resPath, string outputPath, bool isOverride = true)
     {
-        // 如果输出文件存在，并且不覆盖文件，则退出
+        // If the output file exists and the file is not overwritten, exit
         if (!isOverride && File.Exists(outputPath))
             return;
 

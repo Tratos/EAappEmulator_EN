@@ -1,12 +1,12 @@
 ﻿using EAappEmulater.Api;
-using EAappEmulater.Utils;
-using EAappEmulater.Models;
 using EAappEmulater.Helper;
+using EAappEmulater.Models;
+using EAappEmulater.Utils;
 
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// FriendView.xaml 的交互逻辑
+/// Interaction logic of FriendView.xaml
 /// </summary>
 public partial class FriendView : UserControl
 {
@@ -25,25 +25,26 @@ public partial class FriendView : UserControl
     {
         Globals.IsGetFriendsSuccess = false;
         Globals.FriendsXmlString = string.Empty;
+        Globals.QueryPresenceString = string.Empty;
 
         LoggerHelper.Info("Retrieving the friend list of the current account...");
 
         try
         {
-            // 最多执行4次
+            // Execute up to 4 times
             for (int i = 0; i <= 4; i++)
             {
-                // 当第4次还是失败，终止程序
+                // When it still fails for the fourth time, terminate the program
                 if (i > 3)
                 {
-                    LoggerHelper.Error("Failed to obtain the friend list of the current account，Please check network connection");
+                    LoggerHelper.Error("Failed to obtain the friend list of the current account, please check the network connection.");
                     return;
                 }
 
-                // 第1次不提示重试
+                // Retry without prompting for the first time
                 if (i > 0)
                 {
-                    LoggerHelper.Info($"Get the friend list of the current account and start the chapter {i} Retrying...");
+                    LoggerHelper.Info($"Obtaining the friend list of the current account, starting the {i} retry...");
                 }
 
                 var friends = await EasyEaApi.GetUserFriends();
@@ -68,8 +69,8 @@ public partial class FriendView : UserControl
                         });
                     }
 
-                    // 升序排序
-                    // 如果 DisplayName 为 null 或者 其他国家字符，则可能会抛出异常
+                    // Sort in ascending order
+                    // If DisplayName is null or other national characters, an exception may be thrown
                     _friendInfoList = _friendInfoList.OrderBy(p => p.DisplayName, StringComparer.InvariantCulture).ToList();
 
                     var index = 0;
@@ -79,12 +80,13 @@ public partial class FriendView : UserControl
                         ObsCol_FriendInfos.Add(friendInfo);
                     }
 
-                    // 选中第一个
+                    //Select the first one
                     if (ObsCol_FriendInfos.Count != 0)
                         ListBox_FriendInfo.SelectedIndex = 0;
 
-                    // 生成好友列表字符串
+                    // Generate friend list string
                     GenerateXmlString();
+                    GenerateXmlStringForQueryPresence();
 
                     break;
                 }
@@ -139,5 +141,66 @@ public partial class FriendView : UserControl
 
         Globals.FriendsXmlString = doc.InnerXml;
         Globals.IsGetFriendsSuccess = true;
+    }
+    private void GenerateXmlStringForQueryPresence()
+    {
+        if (_friendInfoList.Count == 0)
+            return;
+
+        var doc = new XmlDocument();
+
+        var lsx = doc.CreateElement("LSX");
+        doc.AppendChild(lsx);
+
+        var response = doc.CreateElement("Response");
+        response.SetAttribute("id", "##ID##");
+        response.SetAttribute("sender", "XMPP");
+        lsx.AppendChild(response);
+
+        var queryFreiResp = doc.CreateElement("QueryPresenceResponse");
+        response.AppendChild(queryFreiResp);
+
+        foreach (var friendInfo in _friendInfoList)
+        {
+            var friend = doc.CreateElement("Friend");
+
+            var title = MiscUtil.GetRandomFriendTitle();
+
+            friend.SetAttribute("RichPresence", title);
+            friend.SetAttribute("AvatarId", "##AvatarId##");
+            friend.SetAttribute("UserId", $"{friendInfo.UserId}");
+            friend.SetAttribute("Group", "");
+            friend.SetAttribute("Title", title);
+            friend.SetAttribute("TitleId", "Origin.OFR.50.0004152");
+            friend.SetAttribute("GamePresence", "");
+            friend.SetAttribute("Persona", friendInfo.DisplayName);
+            friend.SetAttribute("PersonaId", $"{friendInfo.PersonaId}");
+            friend.SetAttribute("State", "MUTUAL");
+            friend.SetAttribute("MultiplayerId", "196216");
+            friend.SetAttribute("GroupId", "");
+            friend.SetAttribute("Presence", "INGAME");
+
+            queryFreiResp.AppendChild(friend);
+        }
+
+        // Manually add an additional Friend element, which is the player's own information
+        var extraFriend = doc.CreateElement("Friend");
+        extraFriend.SetAttribute("RichPresence", "");
+        extraFriend.SetAttribute("AvatarId", "");
+        extraFriend.SetAttribute("UserId", "##UID##");
+        extraFriend.SetAttribute("Group", "");
+        extraFriend.SetAttribute("Title", "");
+        extraFriend.SetAttribute("TitleId", "");
+        extraFriend.SetAttribute("GamePresence", "");
+        extraFriend.SetAttribute("Persona", "");
+        extraFriend.SetAttribute("PersonaId", "------");
+        extraFriend.SetAttribute("State", "NONE");
+        extraFriend.SetAttribute("MultiplayerId", "");
+        extraFriend.SetAttribute("GroupId", "");
+        extraFriend.SetAttribute("Presence", "UNKNOWN");
+
+        queryFreiResp.AppendChild(extraFriend);
+
+        Globals.QueryPresenceString = doc.InnerXml;
     }
 }

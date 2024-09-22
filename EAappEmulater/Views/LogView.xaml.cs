@@ -6,7 +6,7 @@ using NLog.Common;
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// LogView.xaml 的交互逻辑
+/// Interaction logic of LogView.xaml
 /// </summary>
 public partial class LogView : UserControl
 {
@@ -20,7 +20,7 @@ public partial class LogView : UserControl
 
         ToDoList();
 
-        // 每次加载控件时，日志滚动最后一行
+        // Each time the control is loaded, the log scrolls to the last line
         this.Loaded += (s, e) => { ScrollToLast(); };
     }
 
@@ -49,20 +49,20 @@ public partial class LogView : UserControl
 
             var item = new LogInfo()
             {
-                Time = logEvent.TimeStamp.ToString("HH:mm:ss"),
+                Time = logEvent.TimeStamp.ToString("HH:mm:ss.ffff"),
                 Level = logEvent.Level.Name,
                 Message = $"{logEvent.Message} {logEvent.Exception?.Message}"
             };
 
             ObsCol_LogInfos.Add(item);
 
-            // 滚动最后一行
+            //Scroll the last line
             ScrollToLast();
         });
     }
 
     /// <summary>
-    /// 日志滚动到最后一行
+    /// Scroll the log to the last line
     /// </summary>
     private void ScrollToLast()
     {

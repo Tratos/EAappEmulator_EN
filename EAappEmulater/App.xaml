@@ -7,7 +7,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <!--  资源字典  -->
+            <!-- Resource Dictionary -->
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/ModernWpf;component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>

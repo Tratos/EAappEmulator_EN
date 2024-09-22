@@ -1,24 +1,26 @@
 ﻿using EAappEmulater.Core;
 using EAappEmulater.Enums;
-using EAappEmulater.Utils;
 using EAappEmulater.Helper;
+using EAappEmulater.Utils;
 
 namespace EAappEmulater;
 
 public static class Globals
 {
     /// <summary>
-    /// 全局配置文件路径
+    /// Global configuration file path
     /// </summary>
     private static readonly string _configPath;
 
     /// <summary>
-    /// 当前使用的账号槽
+    /// The currently used account slot
     /// </summary>
     public static AccountSlot AccountSlot { get; set; } = AccountSlot.S0;
 
     public static bool IsGetFriendsSuccess { get; set; } = false;
     public static string FriendsXmlString { get; set; } = string.Empty;
+    public static string QueryPresenceString { get; set; } = string.Empty;
+
 
     static Globals()
     {
@@ -26,7 +28,7 @@ public static class Globals
     }
 
     /// <summary>
-    /// 读取全局配置文件
+    /// Read the global configuration file
     /// </summary>
     public static void Read()
     {
@@ -43,14 +45,14 @@ public static class Globals
         }
         else
         {
-            LoggerHelper.Warn($"Enumeration conversion failed AccountSlot {slot}");
+            LoggerHelper.Warn($"Enum conversion failed AccountSlot {slot}");
         }
 
         LoggerHelper.Info("Read global configuration file successfully");
     }
 
     /// <summary>
-    /// 写入全局配置文件
+    /// Write global configuration file
     /// </summary>
     public static void Write()
     {
@@ -64,7 +66,7 @@ public static class Globals
     }
 
     /// <summary>
-    /// 获取当前账号槽全局配置文件路径
+    /// Get the current account slot global configuration file path
     /// </summary>
     public static string GetAccountIniPath()
     {
@@ -72,7 +74,7 @@ public static class Globals
     }
 
     /// <summary>
-    /// 获取当前账号槽WebView2缓存路径
+    /// Get the current account slot WebView2 cache path
     /// </summary>
     public static string GetAccountCacheDir()
     {

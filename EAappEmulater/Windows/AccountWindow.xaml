@@ -29,8 +29,8 @@
                 <ui:IconHyperlink
                     Margin="0,0,7,0"
                     Text="GitHub"
-                    ToolTip="https://github.com/CrazyZhang666/EAappEmulater"
-                    Uri="https://github.com/CrazyZhang666/EAappEmulater" />
+                    ToolTip="https://github.com/Tratos/EAappEmulator_EN"
+                    Uri="https://github.com/Tratos/EAappEmulator_EN" />
                 <ui:WinButton
                     Command="{Binding OpenConfigFolderCommand}"
                     FontSize="14"

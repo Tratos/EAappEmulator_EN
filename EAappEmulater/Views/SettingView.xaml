@@ -23,14 +23,14 @@
             BorderThickness="1"
             SnapsToDevicePixels="True">
             <StackPanel>
-                <ui:IconHeader Title="system message" />
+                <ui:IconHeader Title="System information" />
                 <StackPanel>
-                    <ui:FormLabel x:Name="FormLabel_VersionInfo" Title="Program Version" />
+                    <ui:FormLabel x:Name="FormLabel_VersionInfo" Title="Program version" />
 
                     <Label />
-                    <ui:FormLabel x:Name="FormLabel_UserName" Title="user name" />
+                    <ui:FormLabel x:Name="FormLabel_UserName" Title="Username" />
                     <ui:FormLabel x:Name="FormLabel_MachineName" Title="computer name" />
-                    <ui:FormLabel x:Name="FormLabel_OSVersion" Title="system version" />
+                    <ui:FormLabel x:Name="FormLabel_OSVersion" Title="System version" />
                     <ui:FormLabel x:Name="FormLabel_SystemDirectory" Title="System directory" />
 
                     <Label />
@@ -41,7 +41,7 @@
                     <Label />
                 </StackPanel>
 
-                <ui:IconHeader Title="Common tool" />
+                <ui:IconHeader Title="Common tools" />
                 <WrapPanel>
                     <ui:IconButton
                         Command="{Binding OpenConfigFolderCommand}"

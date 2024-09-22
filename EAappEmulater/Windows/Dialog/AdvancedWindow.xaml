@@ -7,8 +7,8 @@
     xmlns:ui="http://wpf.microsoft.com/ui/2024/xaml"
     x:Name="Window_Advanced"
     Title="EA app emulator"
-    Width="660"
-    Height="350"
+    Width="700"
+    Height="380"
     CaptionHeight="32"
     Closing="Window_Advanced_Closing"
     DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
@@ -25,7 +25,7 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
 
-        <!--  右侧游戏海报  -->
+        <!-- Game poster on the right -->
         <Border
             BorderBrush="#BEBEBE"
             BorderThickness="0,0,1,0"
@@ -37,7 +37,7 @@
                 Source="{Binding AdvancedModel.Image}">
                 <ui:Image.ToolTip>
                     <StackPanel>
-                        <TextBlock d:Text="Star Wars : Battlefront 2" Text="{Binding AdvancedModel.Name}" />
+                        <TextBlock d:Text="Star Wars: Battlefront 2" Text="{Binding AdvancedModel.Name}" />
                         <TextBlock
                             Margin="0,3,0,0"
                             d:Text="Star Wars : Battle Front II"
@@ -47,7 +47,7 @@
             </ui:Image>
         </Border>
 
-        <!--  右侧功能区  -->
+        <!--Right ribbon -->
         <Grid Grid.Column="1" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="32" />
@@ -55,7 +55,7 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!--  游戏标题  -->
+            <!-- Game title -->
             <TextBlock
                 Margin="7,0,43,0"
                 VerticalAlignment="Center"
@@ -65,38 +65,38 @@
                 Text="{Binding AdvancedModel.Name}" />
 
             <Grid Grid.Row="1">
-                <!--  主要功能区域  -->
+                <!-- Main functional areas -->
                 <TabControl>
-                    <!--  注册表  -->
+                    <!-- Registry -->
                     <ui:IconTabItem Header="Registry" Icon="&#xF158;">
                         <DockPanel Margin="0,3,0,0">
-                            <!--  标题  -->
+                            <!-- Title -->
                             <ui:IconHeader Title="game position" DockPanel.Dock="Top" />
-                            <!--  游戏路径  -->
+                            <!-- Game path -->
                             <ui:TextBoxHint
                                 DockPanel.Dock="Top"
                                 Hint="Display the registry game installation directory location"
                                 IsReadOnly="True"
                                 Text="{Binding AdvancedModel.GameDir}" />
-                            <!--  标题  -->
+                            <!-- Title -->
                             <ui:IconHeader
                                 Title="Startup parameters"
                                 Margin="5,0,5,0"
                                 DockPanel.Dock="Top" />
-                            <!--  启动参数  -->
+                            <!-- Startup parameters -->
                             <ui:TextBoxHint
-                                Hint="Enter the game's advanced startup parameters, such as: -PerfOverlay.DrawFps 1"
+                                Hint="Enter the game’s advanced startup parameters, such as: -PerfOverlay.DrawFps 1"
                                 Style="{StaticResource TextBoxHintStyle_MultiLine}"
                                 Text="{Binding AdvancedModel.GameArgs}" />
                         </DockPanel>
                     </ui:IconTabItem>
 
-                    <!--  自定义  -->
-                    <ui:IconTabItem Header="customize" Icon="&#xF8A5;">
+                    <!-- Customization -->
+                    <ui:IconTabItem Header="Customize" Icon="&#xF8A5;">
                         <DockPanel Margin="0,3,0,0">
-                            <!--  标题  -->
+                            <!-- Title -->
                             <ui:IconHeader Title="game position" DockPanel.Dock="Top" />
-                            <!--  游戏路径  -->
+                            <!-- Game path -->
                             <DockPanel DockPanel.Dock="Top">
                                 <ui:IconButton
                                     Margin="0,5,5,5"
@@ -110,12 +110,12 @@
                                     IsReadOnly="True"
                                     Text="{Binding AdvancedModel.GameDir2}" />
                             </DockPanel>
-                            <!--  标题  -->
+                            <!-- Title -->
                             <ui:IconHeader
                                 Title="Startup parameters"
                                 Margin="5,0,5,0"
                                 DockPanel.Dock="Top" />
-                            <!--  启动参数  -->
+                            <!-- Startup parameters -->
                             <ui:TextBoxHint
                                 Hint="Enter the game’s advanced startup parameters, such as: -dataPath ./ModData/Default"
                                 Style="{StaticResource TextBoxHintStyle_MultiLine}"
@@ -134,10 +134,10 @@
                 </StackPanel>
             </Grid>
 
-            <!--  底部面板  -->
+            <!-- Bottom panel -->
             <DockPanel Grid.Row="2">
                 <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                    <!--  游戏语言  -->
+                    <!-- Game language -->
                     <ComboBox
                         x:Name="ComboBox_LocaleInfos"
                         Width="166"

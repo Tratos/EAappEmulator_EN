@@ -1,13 +1,13 @@
-﻿using EAappEmulater.Core;
+﻿using CommunityToolkit.Mvvm.Input;
+using EAappEmulater.Core;
 using EAappEmulater.Enums;
 using EAappEmulater.Models;
 using EAappEmulater.Windows;
-using CommunityToolkit.Mvvm.Input;
 
 namespace EAappEmulater.Views;
 
 /// <summary>
-/// GameView.xaml 的交互逻辑
+/// Interaction logic of GameView.xaml
 /// </summary>
 public partial class GameView : UserControl
 {
